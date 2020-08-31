@@ -1,0 +1,36 @@
+<form action="" #formDirective="ngForm" [formGroup]="cameraForm" (ngSubmit)="send(formDirective)">
+  <p>{{heading}}</p>
+  <div class="default-form__group" fxLayout="row" fxLayoutGap="3rem">
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
+      <mat-label>Name</mat-label>
+      <input matInput required formControlName="name" />
+      <mat-error *ngIf="name.invalid && name.touched">Name is required.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
+      <mat-label>IP</mat-label>
+      <input matInput required formControlName="ip" />
+      <mat-error *ngIf="ip.invalid && ip.touched">IP is required.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
+      <mat-select required formControlName="status" placeholder="Select Status">
+        <mat-option value="active">Enabled</mat-option>
+        <mat-option value="inactive">Disabled</mat-option>
+      </mat-select>
+      <mat-error *ngIf="status.invalid && status.touched">Status is required.</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="default-form__group" fxLayout="row">
+    <quill-editor fxFlex="100%" [formControl]="cameraForm.controls['description']" [style]="{ height: '200px' }">
+    </quill-editor>
+  </div>
+  <div class="button-wrapper" fxLayout="row" fxLayout.lt-sm="row wrap" fxLayoutAlign="end center">
+    <button class="btn-default" type="submit" mat-raised-button [disabled]="cameraForm.invalid">
+      Save
+    </button>
+    <button type="reset" class="btn-cancel" [mat-dialog-close] mat-button>
+      Cancel
+    </button>
+  </div>
+</form>

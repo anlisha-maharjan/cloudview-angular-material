@@ -1,0 +1,111 @@
+@import "var";
+
+cloudview-video {
+
+  .video-list{
+    padding: 0;
+  }
+
+  .video-list-body{
+    padding: 3rem;
+  }
+
+  .list-header {
+    height: auto;
+    margin: 0 0 2rem;
+    padding: 2rem 2rem 0;
+    border: none;
+    background: transparent;
+
+    @include media-xs {
+      height: auto;
+      padding-top: $spacing;
+      padding-bottom: $spacing;
+    }
+
+    .list-name {
+      color: $color-3;
+      font-size: 20px;
+      line-height: 32px;
+      font-weight: 500;
+      padding-right: $spacing;
+
+      @include media-xs {
+        border-right: none;
+      }
+    }
+
+    .filter-input {
+      font-size: 16px;
+      line-height: 1.125;
+      border: none;
+      height: 32px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .filter-input-icon {
+      width: 1.2em;
+      color: $theme-icon;
+      vertical-align: bottom;
+      height: 22px;
+      font-size: 22px;
+      margin-right: $padding-xs;
+    }
+
+    .table-filter-wrapper {
+      position: relative;
+      margin-left: auto;
+
+      .filter-input-icon {
+        position: absolute;
+        top: 1rem;
+        left: 1.2rem;
+      }
+
+      .filter-input {
+        width: 100%;
+        height: 38px;
+        padding: .5rem 1.5rem .5rem 4.5rem;
+        border-radius: 30px;
+        background-color: #e7eef3;
+        transition: 300ms ease;
+
+        &:focus {
+          background-color: #ffffff;
+          box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+
+    .actions {
+      button.mat-stroked-button {
+        min-width: 75px;
+        margin: 0 .5rem;
+        padding: 0.2rem 1rem;
+        border-color: $color-3;
+        border-radius: 30px;
+        background-color: transparent;
+        color: $color-3;
+
+        &.create {
+          border-color: $color-3;
+          background-color: $color-3;
+          color: #ffffff;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .video-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+}

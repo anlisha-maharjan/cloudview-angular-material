@@ -1,0 +1,15 @@
+<div class="page" fxLayout="row" fxLayoutAlign="center center">
+  <div class="login-form">
+    <span class="logo-wrap"><img src="assets/img/logo.svg" alt=""></span>
+
+    <h4>Email Verification</h4>
+
+    <form fxLayout="column" fxLayoutGap="16px" [formGroup]="verifyForm">
+
+      <div fxFlex="auto" fxLayout="column">
+        <p style="text-align: center;">You have been successfully verified. Please <a style="color: #1261A0;"
+          class="forget-pass" routerLink='/login'>login here.</a></p>
+      </div>
+    </form>
+  </div>
+</div>

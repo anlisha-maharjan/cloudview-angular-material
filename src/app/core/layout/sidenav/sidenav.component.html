@@ -1,0 +1,27 @@
+<div class="sidenav" fxFlex="grow" fxLayout="column" [@sidenavState]="sidenavState$ | async"
+  [class.collapsed]="isCollapsed">
+
+  <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+    <span *ngIf="isCollapsed" style="width: 26px; text-align: center; margin-left: -3px;" fxFlexAlign="center"><img
+        src="/assets/img/logo.svg" style="width: 26px; vertical-align: text-top;"></span>
+
+    <img *ngIf="!isCollapsed" [routerLink]="['/']" style="height: 35px; margin-left: 26px; margin-bottom: -5px;"
+      src="/assets/img/logo.svg" fxFlexAlign="center" class="logo">
+
+    <span fxFlex>
+      <!-- fill space --></span>
+
+    <div fxHide fxShow.gt-md fxFlexAlign="center" class="toggle-wrap">
+      <button class="collapse-toggle" *ngIf="!isCollapsedState" mat-icon-button (click)="toggleCollapsed()">
+        <mat-icon class="icon" svgIcon="icon-menu"></mat-icon>
+      </button>
+      <button class="collapse-toggle" *ngIf="isCollapsedState" mat-icon-button (click)="toggleCollapsed()">
+        <mat-icon class="icon" svgIcon="icon-menu-open"></mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <cloudview-scrollbar class="sidenav-items" fxFlex>
+    <cloudview-sidenav-item *ngFor="let item of items$ | async" [item]="item" [level]="1"></cloudview-sidenav-item>
+  </cloudview-scrollbar>
+</div>

@@ -1,0 +1,117 @@
+<div class="padding breadcrumb-title-wrap">
+  <h2>Video</h2>
+  <ul>
+    <li>
+      <a routerLink="/">Dashboard</a>
+      <mat-icon>chevron_right</mat-icon>
+    </li>
+    <li>
+      <span>Video</span>
+    </li>
+  </ul>
+</div>
+<section class="padding">
+  <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="3rem">
+    <mat-card fxFlex="100%" class="video-list">
+
+      <div class="list-header" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="8px"
+        fxLayoutGap.gt-xs="24px" style="border-bottom: 1px solid #000; padding-bottom: 2rem;">
+        <div class="list-name">Video</div>
+
+        <div class="table-filter-wrapper">
+          <mat-icon class="filter-input-icon">search</mat-icon>
+          <input fxFlex class="filter-input" (change)="onSearch($event)" placeholder="Search&hellip;">
+        </div>
+
+        <div class="actions">
+          <button class="create" type="button" mat-stroked-button color="primary" (click)="openAddModal(add)">
+            <mat-icon svgIcon="icon-add"></mat-icon>
+          </button>
+        </div>
+        <div class="actions">
+          <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="50%">
+            <mat-select [(value)]="filter" (selectionChange)="filterVideos()">
+              <mat-option value="all">All</mat-option>
+              <mat-option value="upload">Uploaded</mat-option>
+              <mat-option value="network">Network</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="video-list-body">
+        <div class="row" fxLayout="row wrap">
+          <div class="cols" fxFlex="33.333%" *ngFor="let video of videoList">
+            <mat-card>
+              <mat-card-header>
+                <div mat-card-avatar class="video-header-image"></div>
+                <mat-card-title>{{video.name}}</mat-card-title>
+                <mat-card-subtitle>John Doe</mat-card-subtitle>
+              </mat-card-header>
+              <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
+              <mat-card-content>
+                <p>
+                  {{video.description}}
+                </p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button (click)="openEditModal(edit, video)" matTooltip="Edit" Class="default-tool-tip"
+                  mat-icon-button>
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-button (click)="openDeleteModal(delete, video)" matTooltip="Delete" Class="default-tool-tip"
+                  mat-icon-button>
+                  <mat-icon svgIcon="icon-trash"></mat-icon>
+                </button>
+                <button mat-button (click)="download(video)" matTooltip="Download" Class="default-tool-tip"
+                  mat-icon-button>
+                  <mat-icon svgIcon="icon-download"></mat-icon>
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</section>
+
+<ng-template #add>
+  <span class="modal-icon">
+    <mat-icon svgIcon="icon-video"></mat-icon>
+  </span>
+  <div class="modal-content-wrap">
+    <mat-dialog-content>
+      <cloudview-add-video (refresh)="getVideosList()"></cloudview-add-video>
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #edit>
+  <span class="modal-icon">
+    <mat-icon svgIcon="icon-video"></mat-icon>
+  </span>
+  <div class="modal-content-wrap">
+    <mat-dialog-content>
+      <cloudview-add-video (refresh)="getVideosList()" [id]="editId"></cloudview-add-video>
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #delete>
+  <span class="modal-icon">
+    <mat-icon svgIcon="icon-trash"></mat-icon>
+  </span>
+  <div class="modal-content-wrap">
+    <mat-dialog-content>
+      Are you sure?
+    </mat-dialog-content>
+    <div mat-dialog-actions>
+      <button mat-button [mat-dialog-close]>
+        Cancel
+      </button>
+      <button mat-button [mat-dialog-close] (click)="deleteRow()" class="btn-default btn-red">
+        Delete
+      </button>
+    </div>
+  </div>
+</ng-template>

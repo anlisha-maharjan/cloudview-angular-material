@@ -1,0 +1,62 @@
+<div class="page" fxLayout="row" fxLayoutAlign="center center">
+  <div class="login-form">
+    <span class="logo-wrap"><img src="assets/img/logo.svg" alt=""></span>
+
+    <h4>Sign Up <span style="display: block; font-size: 1.4rem;margin-top: 1rem;">Enter your details to create your
+        account:</span></h4>
+
+    <form fxLayout="column" fxLayoutGap="16px" #formDirective="ngForm" [formGroup]="registerForm" (ngSubmit)="register(formDirective)">
+
+      <div fxFlex="auto" fxLayout="column">
+        <mat-form-field appearance="outline" fxFlex="grow">
+          <mat-icon matPrefix>account_circle</mat-icon>
+          <mat-label>Name</mat-label>
+          <input matInput required formControlName="fullName" />
+          <mat-error *ngIf="fullName.invalid && fullName.touched"> Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="grow">
+          <mat-icon matPrefix>account_circle</mat-icon>
+          <mat-label>E-Mail</mat-label>
+          <input matInput required formControlName="email" />
+          <mat-error *ngIf="email.invalid && email.touched">Invalid Email</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="grow">
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <mat-label>Password</mat-label>
+          <input matInput [type]="inputType" formControlName="password" required />
+          <button type="button" mat-icon-button matSuffix (click)="toggleVisibility()" matTooltip="Toggle Visibility">
+            <mat-icon *ngIf="visible">visibility</mat-icon>
+            <mat-icon *ngIf="!visible">visibility_off</mat-icon>
+          </button>
+          <mat-error *ngIf="password.errors?.required && password.touched">Password is required</mat-error>
+          <mat-error *ngIf="password.errors?.minlength  && password.touched">Password must be atleast 8 characters.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="grow">
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <mat-label>Confirm Password</mat-label>
+          <input matInput [type]="confirmPwdInputType" formControlName="confirmPassword" required />
+          <button type="button" mat-icon-button matSuffix (click)="toggleConfirmPwdVisibility()"
+            matTooltip="Toggle Visibility">
+            <mat-icon *ngIf="confirmPwdVisible">visibility</mat-icon>
+            <mat-icon *ngIf="!confirmPwdVisible">visibility_off</mat-icon>
+          </button>
+          <mat-error *ngIf="confirmPassword.invalid && confirmPassword.touched"> Password does not match</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- <mat-checkbox class="checkbox" #checkbox>
+        I Agree the terms and conditions.
+      </mat-checkbox> -->
+
+      <button class="login-btn" type="submit" color="primary" mat-raised-button>
+        SIGN UP
+      </button>
+      <p style="margin: 2.5rem 0 0; text-align: center;">Already have an account ? <a style="color: #1261A0;"
+          class="forget-pass" routerLink='/login'>Sign In</a></p>
+    </form>
+  </div>
+</div>

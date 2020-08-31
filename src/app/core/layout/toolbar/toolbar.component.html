@@ -1,0 +1,27 @@
+<div class="toolbar" fxLayout="row" fxLayoutAlign="space-between">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <cloudview-toolbar-sidenav-mobile-toggle></cloudview-toolbar-sidenav-mobile-toggle>
+
+    <img class="logo" [routerLink]="['/']" fxHide.gt-md fxHide.xs
+         style="height: 35px; margin-left: 24px; margin-bottom: -5px;"
+         src="../../../../assets/img/logo.svg">
+
+    <!-- <cloudview-toolbar-search-bar fxFlex="500px" fxHide fxShow.gt-md></cloudview-toolbar-search-bar> -->
+  </div>
+
+  <div fxLayout="row">
+
+    <cloudview-toolbar-fullscreen-toggle class="button"></cloudview-toolbar-fullscreen-toggle>
+
+    <!-- <cloudview-toolbar-search class="button"></cloudview-toolbar-search> -->
+
+    <cloudview-toolbar-notifications class="button"></cloudview-toolbar-notifications>
+
+    <cloudview-toolbar-user-button class="button"></cloudview-toolbar-user-button>
+
+    <cloudview-toolbar-quickpanel-toggle class="button"></cloudview-toolbar-quickpanel-toggle>
+
+    <!-- <cloudview-toolbar-quickpanel-toggle class="button" [quickpanel]="quickpanel"></cloudview-toolbar-quickpanel-toggle> -->
+
+  </div>
+</div>

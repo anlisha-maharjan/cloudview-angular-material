@@ -1,0 +1,594 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 1.5rem;
+}
+
+h1 {
+  font-size: 4vh;
+}
+
+h2 {
+  font-size: 3.5vh;
+}
+
+h3 {
+  font-size: 3vh;
+}
+
+h4 {
+  font-size: 2.5vh;
+}
+
+h5 {
+  font-size: 2vh;
+}
+
+h6 {
+  font-size: 1.6rem;
+}
+
+/*========== Start common ==========*/
+
+.page-title {
+  color: $primary-color;
+  font-weight: 500;
+}
+
+.title-secondary {
+  color: $secondary-color;
+  font-weight: 400;
+}
+
+.row {
+  margin-left: -2rem;
+  margin-right: -2rem;
+
+  .cols {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/*========== End Common ==========*/
+
+
+/*========== Start BreadCrumb Design ==========*/
+.breadcrumb-title-wrap {
+  height: 220px;
+  margin-bottom: -104px;
+  padding-top: 40px;
+  padding-bottom: 64px;
+  background-color: #1976d2;
+  background: linear-gradient(to right, rgba(0, 77, 145, 1) 0%, rgba(25, 118, 210, 1) 100%);
+
+  h2 {
+    margin: 0 0 .5rem;
+    color: #ffffff;
+  }
+
+  ul {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      position: relative;
+
+      mat-icon {
+        margin: 0 .5rem;
+        color: rgba(#ffffff, .87);
+      }
+
+      a {
+        color: rgba(#ffffff, .87);
+        text-decoration: none;
+      }
+
+      span {
+        color: #ffffff;
+      }
+
+      &:hover {
+
+        a,
+        mat-icon {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
+  &--inner {
+    height: 205px;
+    margin-bottom: -91px;
+  }
+}
+
+/*========== End BreadCrumb Design ==========*/
+
+/*========== Start Default Form Design ==========*/
+mat-card.form-card {
+  margin: 0 0 3rem;
+  box-shadow: 0 0 10px -5px rgba(0, 0, 0, .3);
+
+  mat-card-title.mat-card-title {
+    margin: 0 -25px 35px;
+    padding: 0 24px 24px;
+    border-bottom: 1px solid #eee;
+
+    h5 {
+      margin: 0;
+      color: $secondary-color;
+      font-weight: 400;
+    }
+  }
+}
+
+.default-form {
+  &__group {
+    margin: 0 0 1rem;
+
+    mat-form-field {
+      label.mat-form-field-label {
+        color: $primary-color;
+      }
+    }
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+}
+
+// timepicker
+.time-picker-wrap {
+  .mat-form-field-flex {
+    .mat-form-field-infix {
+      height: 39.26px;
+      display: flex;
+      align-items: center;
+      font-size: 1.4rem;
+
+      input {
+        height: 15.2px;
+      }
+    }
+
+    .timepicker__header {
+      background-color: $primary-color;
+    }
+
+    .timepicker-dial__time {
+      input {
+        height: initial;
+      }
+    }
+
+    .clock-face__number>span.active {
+      background-color: $primary-color !important;
+    }
+
+    .clock-face__clock-hand {
+      background-color: $primary-color !important;
+    }
+
+    .clock-face__clock-hand_minute:before {
+      border-color: $primary-color !important;
+    }
+
+    .timepicker-button {
+      color: $primary-color !important;
+    }
+
+    ngx-material-timepicker-toggle {
+      button {
+        svg {
+          width: 1.6rem;
+          height: 1.6rem;
+        }
+      }
+    }
+  }
+}
+
+.button-wrapper {
+  margin-top: 4rem;
+
+  button {
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+
+  @media(max-width: 992px) {
+    button {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+/*========== End Default Form Design ==========*/
+
+/*========== Start Buttons Design ==========*/
+button.btn-default {
+  min-width: initial;
+  padding: 0 4rem;
+  border: 1px solid $primary-color;
+  border-radius: 30px;
+  background-color: $primary-color;
+  color: #fff;
+
+  &:hover {
+    background-color: transparent;
+    color: $primary-color;
+  }
+
+  &--outlined {
+    background-color: transparent;
+    color: $primary-color;
+
+    &:hover {
+      background-color: $primary-color;
+      color: #fff;
+    }
+  }
+
+  &[disabled] {
+    border-color: rgba($primary-color, 0.12) !important;
+    background-color: rgba($primary-color, 0.12) !important;
+  }
+}
+
+button.btn-secondary {
+  min-width: initial;
+  padding: 0 4rem;
+  border: 1px solid $secondary-color;
+  border-radius: 30px;
+  background-color: $secondary-color;
+  color: #fff;
+
+  &:hover {
+    background-color: transparent;
+    color: $secondary-color;
+  }
+
+  &[disabled] {
+    border-color: rgba($secondary-color, 0.12) !important;
+    background-color: rgba($secondary-color, 0.12) !important;
+  }
+}
+
+button.btn-cancel {
+  min-width: initial;
+  padding: 0 4rem;
+  border: 1px solid $color-4;
+  border-radius: 30px;
+  background-color: transparent;
+  color: $color-4;
+
+  &:hover {
+    background-color: $color-4;
+    color: #fff;
+  }
+}
+
+.btn-floating {
+  position: fixed !important;
+  bottom: 2rem !important;
+  right: 2rem !important;
+}
+
+/*========== End Buttons Design ==========*/
+
+/*========== Start Default Table Design ==========*/
+.table-responsive {
+  width: 100%;
+  overflow: auto;
+}
+
+.table-default {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    tr {
+      th {
+        padding: 1rem 1.5rem;
+        border: none;
+        background-color: $table-head-bg;
+        color: $table-head-text-color;
+        font-weight: 400;
+        text-align: left;
+
+        &:not(:last-child) {
+          border-right: 1px solid #ffffff;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        padding: 1rem 1.5rem;
+      }
+
+      &:nth-child(odd) {
+        background-color: #f8f8f8;
+      }
+    }
+  }
+}
+
+.nodata {
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  color: #777;
+  font-size: 1.4rem;
+}
+
+.table-filter {
+  padding: 1.5rem 2rem;
+  background-color: #fafafa;
+
+  .mat-form-field-appearance-outline {
+    margin-bottom: 0;
+
+    .mat-form-field-wrapper {
+
+      margin-bottom: 0;
+      padding-bottom: 0;
+
+      .mat-form-field-label-wrapper {
+        top: -1.58em;
+      }
+
+      label {
+        font-size: 1.4rem;
+      }
+    }
+
+    &.mat-form-field-should-float.mat-focused {
+      .mat-form-field-label-wrapper {
+        top: -0.9em;
+      }
+    }
+
+    &.mat-form-field-should-float {
+      .mat-form-field-label-wrapper {
+        top: -0.9em;
+      }
+    }
+  }
+}
+
+/*========== End Default Table Design ==========*/
+
+/*========== Start Default Listing Design ==========*/
+.default-listing {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  list-style: none;
+
+  li {
+    position: relative;
+    padding: 0 0 1rem 2rem;
+    word-break: break-all;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    &:before {
+      width: .8rem;
+      height: .8rem;
+      top: .8rem;
+      left: 0;
+      background-color: $primary-color;
+    }
+
+    &:after {
+      width: 12px;
+      height: 12px;
+      top: 4px;
+      left: -4px;
+      border: 2px solid $color-1;
+    }
+
+    &:not(:last-child) {
+      margin: 0 0 1rem;
+      border-bottom: 1px solid #efefef;
+    }
+  }
+}
+
+/*========== End Default Listing Design ==========*/
+
+/*========== Start Default Modal Design ==========*/
+
+.default-alert-pop {
+  mat-dialog-container.mat-dialog-container {
+    position: relative;
+    padding-top: 4.5rem;
+    box-shadow: none;
+    background-color: transparent;
+
+    .modal-icon {
+      width: 7rem;
+      height: 7rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      background-color: #ffffff;
+      transform: translateX(-50%);
+      border-radius: 50%;
+
+      mat-icon.mat-icon {
+        width: 30px;
+        height: 30px;
+        color: darken($color: $color-4, $amount: 22%);
+      }
+    }
+
+    .modal-content-wrap {
+      width: calc(100% + 20px);
+      display: block;
+      margin: -10px;
+      padding: 40px 30px 30px;
+      border-radius: 6px;
+      box-shadow: 0 6px 22px -8px rgba(0, 0, 0, .4);
+      background-color: #ffffff;
+      text-align: center;
+    }
+
+    h2.mat-dialog-title {
+      margin: 0 0 12px;
+
+      strong {
+        color: darken($color: $color-4, $amount: 22%);
+      }
+    }
+
+    .mat-dialog-content {
+      color: #777;
+      font-size: 1.6rem;
+      line-height: 2.5rem;
+    }
+
+    .mat-dialog-actions {
+      justify-content: center;
+      margin: 3rem 0 0;
+      padding: 0;
+
+      button {
+        border-radius: 5px;
+
+        &.btn-default {
+          &.btn-red {
+            border-color: darken($color: $color-4, $amount: 22%);
+            background-color: darken($color: $color-4, $amount: 22%);
+          }
+
+          &:hover {
+            background-color: transparent;
+            color: darken($color: $color-4, $amount: 22%);
+          }
+        }
+      }
+    }
+  }
+}
+
+.default-add-pop {
+  mat-dialog-container.mat-dialog-container {
+    position: relative;
+    padding-top: 4.5rem;
+    box-shadow: none;
+    background-color: transparent;
+
+    .modal-icon {
+      width: 7rem;
+      height: 7rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      background-color: #ffffff;
+      transform: translateX(-50%);
+      border-radius: 50%;
+
+      mat-icon.mat-icon {
+        width: 30px;
+        height: 30px;
+        color: darken($color: $color-4, $amount: 22%);
+      }
+    }
+
+    .modal-content-wrap {
+      width: calc(100% + 20px);
+      display: block;
+      margin: -10px;
+      padding: 40px 30px 30px;
+      border-radius: 6px;
+      box-shadow: 0 6px 22px -8px rgba(0, 0, 0, .4);
+      background-color: #ffffff;
+      text-align: center;
+    }
+
+    h2.mat-dialog-title {
+      margin: 0 0 12px;
+
+      strong {
+        color: darken($color: $color-4, $amount: 22%);
+      }
+    }
+
+    .mat-dialog-content {
+      color: #777;
+      font-size: 1.6rem;
+      line-height: 2.5rem;
+    }
+
+    .mat-dialog-actions {
+      justify-content: center;
+      margin: 3rem 0 0;
+      padding: 0;
+
+      button {
+        border-radius: 5px;
+
+        &.btn-default {
+          &.btn-red {
+            border-color: darken($color: $color-4, $amount: 22%);
+            background-color: darken($color: $color-4, $amount: 22%);
+          }
+
+          &:hover {
+            background-color: transparent;
+            color: darken($color: $color-4, $amount: 22%);
+          }
+        }
+      }
+    }
+  }
+}
+
+.qr-modal {
+  .mat-dialog-title {
+    position: relative;
+    margin: -14px;
+
+    h2 {
+      margin: 0;
+      font-size: 2vh;
+      text-align: center;
+    }
+
+    button {
+      position: absolute;
+      top: -6px;
+      right: 0;
+    }
+  }
+}
+
+/*========== End Default Modal Design ==========*/

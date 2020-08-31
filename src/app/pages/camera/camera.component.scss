@@ -1,0 +1,12 @@
+@import "var";
+
+cloudview-camera {
+  .enabledCameraStatus{
+    color: $color-1;
+    cursor: pointer;
+  }
+  .disabledCameraStatus{
+    color: $color-4;
+    cursor: pointer;
+  }
+}

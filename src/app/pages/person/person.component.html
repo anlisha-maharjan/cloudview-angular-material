@@ -1,0 +1,121 @@
+<div class="padding breadcrumb-title-wrap">
+  <h2>Person</h2>
+  <ul>
+    <li>
+      <a routerLink="/">Dashboard</a>
+      <mat-icon>chevron_right</mat-icon>
+    </li>
+    <li>
+      <span>Person</span>
+    </li>
+  </ul>
+</div>
+<section class="padding">
+  <cloudview-list name="Person" (filterChange)="onFilterChange($event)">
+    <div class="actions">
+      <button class="create" type="button" mat-stroked-button color="primary" (click)="openAddModal(add)">
+        <mat-icon svgIcon="icon-add"></mat-icon>
+      </button>
+    </div>
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container *ngFor="let column of columns">
+        <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ column.name }}</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <span class="cloudview-mobile-label">{{ column.name }}</span>
+            <!-- Display other columns except name -->
+            <span *ngIf="column.name != 'NAME'">{{ row[column.property] }}</span>
+            <!-- Display Name column -->
+            <div *ngIf="column.name == 'NAME'" style="display: flex; flex-direction: row; align-items: center;">
+              <img *ngIf="row[column.secondproperty]" style="margin-right: 10px;" class="avatar" [src]="row[column.secondproperty]" />
+              <span>{{ row[column.property] }}</span>
+            </div>
+          </mat-cell>
+        </ng-container>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell class="actions-cell" *matHeaderCellDef>ACTION</mat-header-cell>
+        <mat-cell class="actions-cell" *matCellDef="let row">
+          <span class="cloudview-mobile-label"></span>
+          <button (click)="openUploadModal(upload, row)" matTooltip="Upload" Class="default-tool-tip" mat-icon-button>
+            <mat-icon svgIcon="icon-image-upload"></mat-icon>
+          </button>
+          <button (click)="openEditModal(edit, row)" matTooltip="Edit" Class="default-tool-tip" mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button (click)="openDeleteModal(delete, row)" matTooltip="Delete" Class="default-tool-tip" mat-icon-button>
+            <mat-icon svgIcon="icon-trash"></mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="visibleColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: visibleColumns" class="clickable"></mat-row>
+    </mat-table>
+    <div class="nodata" *ngIf="pageLength == 0">No Data Found</div>
+    <mat-paginator class="paginator" [pageSize]="pageSize" [pageSizeOptions]="[10, 15, 25, 100]" [length]="pageLength">
+    </mat-paginator>
+  </cloudview-list>
+</section>
+
+<ng-template #delete>
+  <span class="modal-icon">
+    <mat-icon svgIcon="icon-trash"></mat-icon>
+  </span>
+  <div class="modal-content-wrap">
+    <mat-dialog-content>
+      Are you sure?
+    </mat-dialog-content>
+    <div mat-dialog-actions>
+      <button mat-button [mat-dialog-close]>
+        Cancel
+      </button>
+      <button mat-button [mat-dialog-close] (click)="deleteRow()" class="btn-default btn-red">
+        Delete
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #add>
+  <span class="modal-icon">
+    <mat-icon svgIcon="icon-user"></mat-icon>
+  </span>
+  <div class="modal-content-wrap">
+    <mat-dialog-content>
+      <cloudview-add-person (refresh)="loadModel()"></cloudview-add-person>
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #edit>
+  <span class="modal-icon">
+    <mat-icon svgIcon="icon-user"></mat-icon>
+  </span>
+  <div class="modal-content-wrap">
+    <mat-dialog-content>
+      <cloudview-add-person [id]="editId" (refresh)="loadModel()"></cloudview-add-person>
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #upload>
+  <span class="modal-icon">
+    <mat-icon svgIcon="icon-image-upload"></mat-icon>
+  </span>
+  <div class="modal-content-wrap">
+    <mat-dialog-content>
+      <cloudview-file-upload #uploadComponentAdd [fileUp]="(attachments && attachments.length > 0) ? true : false"
+        multipleFile="true" [attachments]="attachments" inputType="image">
+      </cloudview-file-upload>
+      <div class="button-wrapper" fxLayout="row" fxLayout.lt-sm="row wrap" fxLayoutAlign="end center">
+        <button class="btn-default" [mat-dialog-close] (click)="uploadImage()" mat-raised-button
+          [disabled]="attachments.length == 0">
+          Save
+        </button>
+      </div>
+    </mat-dialog-content>
+  </div>
+</ng-template>

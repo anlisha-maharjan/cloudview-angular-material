@@ -1,0 +1,24 @@
+<div class="subheading" *ngIf="item && item.type === 'subheading'" [class.collapsed]="isCollapsed$ | async"
+  [ngClass]="item.customClass">{{ item.name }}
+</div>
+
+<a *ngIf="item && item.type !== 'subheading'" class="sidenav-item" matRipple [ngClass]="item.separator ?  'has-seprator' : ''" [ngClass]="levelClass"
+  [class.collapsed]="isCollapsed$ | async" [class.active]="isActive()" (click)="handleClick()" fxLayout="row"
+  fxLayoutAlign="start center">
+  <mat-icon class="icon" svgIcon="{{ item.icon }}" *ngIf="level === 1"></mat-icon>
+  <span class="sub-icon" *ngIf="level !== 1">{{ item.icon }}</span>
+  <span class="name">{{ item.name }}</span>
+  <span fxFlex>
+    <!-- fill space --></span>
+  <span class="badge" *ngIf="item.badge" [style.background-color]="item.badgeColor">{{ item.badge }}</span>
+  <mat-icon class="expand-indicator" *ngIf="item && item.subItems && item.subItems.length > 0"
+    [class.rotate]="(dropdownState$ | async) === 'expanded'">
+    expand_more
+  </mat-icon>
+</a>
+
+<div class="dropdown" fxLayout="column" [@dropdownState]="dropdownState$ | async">
+  <ng-container *ngIf="item && item.subItems">
+    <cloudview-sidenav-item *ngFor="let subItem of item.subItems" [item]="subItem" [level]="level+1"></cloudview-sidenav-item>
+  </ng-container>
+</div>
