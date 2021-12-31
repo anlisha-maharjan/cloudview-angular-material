@@ -46,8 +46,8 @@ export class AddCameraComponent implements OnInit, AfterViewInit {
       id: [val.id],
       name: [val.name, [Validators.required]],
       description: [val.description],
-      ip: [val.ip, [Validators.required]],
-      status: [val.status, [Validators.required]]
+      camera_url: [val.camera_url, [Validators.required]],
+      // status: [val.status, [Validators.required]]
     });
   }
 
@@ -59,32 +59,33 @@ export class AddCameraComponent implements OnInit, AfterViewInit {
     return this.cameraForm.get("description");
   }
 
-  get ip() {
-    return this.cameraForm.get("ip");
+  get camera_url() {
+    return this.cameraForm.get("camera_url");
   }
 
-  get status() {
-    return this.cameraForm.get("status");
-  }
+  // get status() {
+  //   return this.cameraForm.get("status");
+  // }
 
   send(formDirective: FormGroupDirective) {
-    this.cameraForm.get('description').patchValue(`${this.cameraForm.get('description').value}`);
+    // this.cameraForm.get('description').patchValue(`${this.cameraForm.get('description').value}`);
     const getFormValue = this.cameraForm.value;
     if (this.cameraForm.valid) {
       if (!getFormValue.id) {
+        getFormValue.status = 'inactive';
         this.cameraService.create(getFormValue).subscribe(
-          response => {
+          (response) => {
             this.dialog.closeAll();
             this.refresh.emit(true);
             this.snackBar.open("Camera Saved Successfully.", "", {
               duration: 2000,
               verticalPosition: "bottom",
-              horizontalPosition: "center"
+              horizontalPosition: "center",
             });
             formDirective.resetForm();
             this.cameraForm.reset();
           },
-          err => {
+          (err) => {
             const error = err.error;
             this.alertService.showMessage(
               "Error",
@@ -96,16 +97,16 @@ export class AddCameraComponent implements OnInit, AfterViewInit {
         );
       } else {
         this.cameraService.update(getFormValue).subscribe(
-          response => {
+          (response) => {
             this.dialog.closeAll();
             this.refresh.emit(true);
             this.snackBar.open("Camera Updated Successfully.", "", {
               duration: 2000,
               verticalPosition: "bottom",
-              horizontalPosition: "center"
+              horizontalPosition: "center",
             });
           },
-          err => {
+          (err) => {
             const error = err.error;
             this.alertService.showMessage(
               "Error",

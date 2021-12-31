@@ -8,6 +8,11 @@ import { VideoService } from "app/services/video.service";
 import { AddVideoRoutingModule } from "./add-video-routing.module";
 import { AddVideoComponent } from "./add-video.component";
 import { QuillModule } from 'ngx-quill';
+import {
+  DropzoneModule,
+  DropzoneConfigInterface,
+  DROPZONE_CONFIG,
+} from "ngx-dropzone-wrapper";
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +20,7 @@ import { QuillModule } from 'ngx-quill';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    DropzoneModule,
     QuillModule
   ],
   providers: [AlertService, VideoService],

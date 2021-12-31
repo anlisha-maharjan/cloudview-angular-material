@@ -9,30 +9,31 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 const routes: Routes = [
   {
     path: "login",
-    loadChildren: "app/pages/auth/login/login.module#LoginModule"
+    loadChildren: "app/pages/auth/login/login.module#LoginModule",
   },
   {
     path: "register",
-    loadChildren: "app/pages/auth/register/register.module#RegisterModule"
+    loadChildren: "app/pages/auth/register/register.module#RegisterModule",
   },
   {
     path: "forgot-password",
-    loadChildren: "app/pages/auth/forgot-password/forgot-password.module#ForgotPasswordModule"
+    loadChildren:
+      "app/pages/auth/forgot-password/forgot-password.module#ForgotPasswordModule",
   },
   {
     path: "verify-email",
     loadChildren:
-      "app/pages/auth/verify-email/verify-email.module#VerifyEmailModule"
+      "app/pages/auth/verify-email/verify-email.module#VerifyEmailModule",
   },
   {
     path: "reset-password",
     loadChildren:
-      "app/pages/auth/reset-password/reset-password.module#ResetPasswordModule"
+      "app/pages/auth/reset-password/reset-password.module#ResetPasswordModule",
   },
   {
     path: "",
     redirectTo: "dashboard",
-    pathMatch: "full"
+    pathMatch: "full",
   },
   {
     path: "",
@@ -41,50 +42,68 @@ const routes: Routes = [
     children: [
       {
         path: "profile",
-        loadChildren: "app/pages/auth/profile/profile.module#ProfileModule"
+        loadChildren: "app/pages/auth/profile/profile.module#ProfileModule",
       },
       {
         path: "dashboard",
         loadChildren: "app/pages/dashboard/dashboard.module#DashboardModule",
-        pathMatch: "full"
+        pathMatch: "full",
       },
       {
         path: "camera",
-        loadChildren: "app/pages/camera/camera.module#CameraModule"
+        loadChildren: "app/pages/camera/camera.module#CameraModule",
       },
       {
         path: "video",
-        loadChildren: "app/pages/video/video.module#VideoModule"
+        loadChildren: "app/pages/video/video.module#VideoModule",
       },
       {
         path: "network-drive",
-        loadChildren: "app/pages/network-drive/network-drive.module#NetworkDriveModule"
+        loadChildren:
+          "app/pages/network-drive/network-drive.module#NetworkDriveModule",
       },
       {
         path: "person",
-        loadChildren: "app/pages/person/person.module#PersonModule"
+        loadChildren: "app/pages/person/person.module#PersonModule",
+      },
+      {
+        path: "unknown-face",
+        loadChildren:
+          "app/pages/unknown-face/unknown-face.module#UnknownFaceModule",
       },
       {
         path: "catalog",
-        loadChildren: "app/pages/catalog/catalog.module#CatalogModule"
-      }
-    ]
-  }
+        loadChildren: "app/pages/catalog/catalog.module#CatalogModule",
+      },
+      {
+        path: "user",
+        loadChildren: "app/pages/user/user.module#UserModule",
+      },
+      {
+        path: "search",
+        loadChildren: "app/pages/search/search.module#SearchModule",
+      },
+      {
+        path: "log",
+        loadChildren: "app/pages/log/log.module#LogModule",
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      preloadingStrategy: PreloadAllModules
-    })
+      preloadingStrategy: PreloadAllModules,
+    }),
   ],
   exports: [RouterModule],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -1,0 +1,43 @@
+<div style="margin: 0 0 2rem;" fxLayout="row wrap" fxLayoutAlign="space-between start">
+  <h4 mat-dialog-title>{{heading}}</h4>
+  <button *ngIf="person && !person.training_completed" type="button" mat-stroked-button color="primary">
+    <mat-icon svgIcon="icon-bot"></mat-icon>
+  </button>
+</div>
+<div class="view-person">
+  <div class="row" fxLayout="row wrap">
+    <div class="cols" fxFlex="33.333%">
+      <div class="view-person-row">
+        <span fxFlex="100%">Name</span>
+        <span fxFlex="100%">{{person ? person.firstname + " " + person.middlename + " " + person.lastname: ''}}</span>
+      </div>
+    </div>
+
+    <div class="cols" fxFlex="33.333%">
+      <div class="view-person-row">
+        <span fxFlex="100%">Gender</span>
+        <span fxFlex="100%">{{person ? person.gender : ''}}</span>
+      </div>
+    </div>
+
+    <div class="cols" fxFlex="33.333%">
+      <div class="view-person-row">
+        <span fxFlex="100%">Catalog</span>
+        <span fxFlex="100%">{{person ? person.catalog : ''}}</span>
+      </div>
+    </div>
+
+    <div class="cols" fxFlex="100%">
+      <div class="view-person-row">
+        <span fxFlex="100%">Description</span>
+        <span fxFlex="100%">{{person ? person.description : ''}}</span>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="galleryImages && galleryImages.length > 0">
+    <h6 style="margin:1.6rem 0; text-align: left; font-weight: 500;">Showing {{activeImageIndex}} of {{totalImages}}
+    </h6>
+    <ngx-gallery (change)="onChange($event)" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+  </ng-container>
+</div>

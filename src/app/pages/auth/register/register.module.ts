@@ -6,12 +6,15 @@ import { RegisterComponent } from "./register.component";
 import { MaterialModule } from "app/shared/material-components.module";
 import { AuthenticationService } from "app/services/authentication.service";
 import { AlertService } from "app/services/alert.service";
+import { MatProgressSpinnerModule } from '@angular/material';
+
 @NgModule({
   imports: [
     CommonModule,
     RegisterRoutingModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   declarations: [RegisterComponent],
   providers: [AuthenticationService, AlertService]

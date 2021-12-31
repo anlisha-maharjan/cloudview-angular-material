@@ -1,30 +1,37 @@
 <form action="" #formDirective="ngForm" [formGroup]="cameraForm" (ngSubmit)="send(formDirective)">
-  <p>{{heading}}</p>
-  <div class="default-form__group" fxLayout="row" fxLayoutGap="3rem">
-    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
-      <mat-label>Name</mat-label>
+  <h4 mat-dialog-title>{{heading}}</h4>
+  <div class="default-form__group" fxLayout="row wrap" fxLayoutGap="3rem">
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="25%">
+      <mat-label>Camera Name</mat-label>
       <input matInput required formControlName="name" />
-      <mat-error *ngIf="name.invalid && name.touched">Name is required.</mat-error>
+      <mat-error *ngIf="name.invalid && name.touched">Camera Name is required.</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
-      <mat-label>IP</mat-label>
-      <input matInput required formControlName="ip" />
-      <mat-error *ngIf="ip.invalid && ip.touched">IP is required.</mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
+    <!-- <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="45%">
       <mat-select required formControlName="status" placeholder="Select Status">
         <mat-option value="active">Enabled</mat-option>
         <mat-option value="inactive">Disabled</mat-option>
       </mat-select>
       <mat-error *ngIf="status.invalid && status.touched">Status is required.</mat-error>
+    </mat-form-field> -->
+
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="65%">
+      <mat-label>Url (Eg: http://username:pass@50.14.12.1/path/to/stream)</mat-label>
+      <input matInput required formControlName="camera_url"
+        placeholder="Eg: http://username:pass@50.14.12.1/path/to/stream" />
+      <mat-error *ngIf="camera_url.invalid && camera_url.touched">Url is required.</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="100%">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
   </div>
-  <div class="default-form__group" fxLayout="row">
+  <!-- <div class="default-form__group" fxLayout="row">
     <quill-editor fxFlex="100%" [formControl]="cameraForm.controls['description']" [style]="{ height: '200px' }">
     </quill-editor>
-  </div>
+  </div> -->
   <div class="button-wrapper" fxLayout="row" fxLayout.lt-sm="row wrap" fxLayoutAlign="end center">
     <button class="btn-default" type="submit" mat-raised-button [disabled]="cameraForm.invalid">
       Save

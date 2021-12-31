@@ -10,6 +10,7 @@ import { CameraRoutingModule } from './camera-routing.module';
 import { CameraComponent } from './camera.component';
 import { CameraService } from '../../services/camera.service';
 import { AddCameraModule } from './add-camera/add-camera.module';
+import { ViewCameraModule } from './view-camera/view-camera.module';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { AddCameraModule } from './add-camera/add-camera.module';
     FormsModule,
     ListModule,
     AddCameraModule,
+    ViewCameraModule,
     // Core
     AspectRatioModule
   ],

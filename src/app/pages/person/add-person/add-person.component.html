@@ -1,7 +1,7 @@
 <form action="" #formDirective="ngForm" [formGroup]="personForm" (ngSubmit)="send(formDirective)">
-  <p>{{heading}}</p>
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2rem" style="margin-bottom: 3rem;">
-    <div class="default-form__group" [fxFlex]="personImages && personImages.length > 0 ? '75%' : ''" fxFlex.lt-md="100%" fxLayout="row wrap" fxLayoutGap="2rem">
+  <h4 mat-dialog-title>{{heading}}</h4>
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2rem">
+    <div class="default-form__group" fxFlex.lt-md="100%" fxLayout="row wrap" fxLayoutGap="2rem">
       <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
         <mat-label>First Name</mat-label>
         <input matInput required formControlName="firstname" />
@@ -15,34 +15,35 @@
 
       <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
         <mat-label>Last Name</mat-label>
-        <input matInput required formControlName="lastname" />
-        <mat-error *ngIf="lastname.invalid && lastname.touched">Last Name is required.</mat-error>
+        <input matInput formControlName="lastname" />
+        <!-- <mat-error *ngIf="lastname.invalid && lastname.touched">Last Name is required.</mat-error> -->
       </mat-form-field>
 
       <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
-        <mat-select required formControlName="gender" placeholder="Select Gender">
+        <mat-select formControlName="gender" placeholder="Select Gender">
           <mat-option value="female">Female</mat-option>
           <mat-option value="male">Male</mat-option>
         </mat-select>
-        <mat-error *ngIf="gender.invalid && gender.touched">Gender is required.</mat-error>
+        <!-- <mat-error *ngIf="gender.invalid && gender.touched">Gender is required.</mat-error> -->
       </mat-form-field>
-
       <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
-        <mat-select formControlName="catalog_id" placeholder="Select Catalog">
-          <mat-option *ngFor="let catalog of catalogList" [value]="catalog.id">{{catalog.name}}</mat-option>
+        <mat-select [formControl]="catalogCtrl" formControlName="catalog_id" placeholder="Select Catalog" #singleSelect>
+          <mat-select-search [formControl]="catalogFilterCtrl"></mat-select-search>
+          <mat-option *ngFor="let catalog of filteredCatalogs | async" [value]="catalog.id">{{catalog.name}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="100%">
+        <mat-label>Description</mat-label>
+        <textarea matInput rows="4" formControlName="description"></textarea>
+      </mat-form-field>
     </div>
-    <div fxFlex="25%" fxFlex.lt-md="100%" *ngIf="personImages && personImages.length > 0">
-      <slideshow height="200px" [minHeight]="'200px'" [autoPlay]="false" [showArrows]="false" [showDots]="true"
-        [imageUrls]="personImages">
-      </slideshow>
-    </div>
+    <!-- <div class="default-form__group" fxLayout="row">
+      <quill-editor fxFlex="100%" [formControl]="personForm.controls['description']" [style]="{ height: '200px'}">
+      </quill-editor>
+    </div> -->
   </div>
-  <div class="default-form__group" fxLayout="row">
-    <quill-editor fxFlex="100%" [formControl]="personForm.controls['description']" [style]="{ height: '200px'}">
-    </quill-editor>
-  </div>
+
   <div class="button-wrapper" fxLayout="row" fxLayout.lt-sm="row wrap" fxLayoutAlign="end center">
     <button class="btn-default" type="submit" mat-raised-button [disabled]="personForm.invalid">
       Save

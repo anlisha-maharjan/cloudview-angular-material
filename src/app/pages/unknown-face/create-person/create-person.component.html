@@ -1,0 +1,49 @@
+<form action="" #formDirective="ngForm" [formGroup]="personForm" (ngSubmit)="send(formDirective)">
+  <h4 mat-dialog-title>{{heading}}</h4>
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2rem">
+    <div class="default-form__group" fxFlex.lt-md="100%" fxLayout="row wrap" fxLayoutGap="2rem">
+      <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
+        <mat-label>First Name</mat-label>
+        <input matInput required formControlName="firstname" />
+        <mat-error *ngIf="firstname.invalid && firstname.touched">First Name is required.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
+        <mat-label>Middle Name</mat-label>
+        <input matInput formControlName="middlename" />
+      </mat-form-field>
+
+      <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastname" />
+      </mat-form-field>
+
+      <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
+        <mat-select formControlName="gender" placeholder="Select Gender">
+          <mat-option value="female">Female</mat-option>
+          <mat-option value="male">Male</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
+        <mat-select [formControl]="catalogCtrl" formControlName="catalog_id" name="catalog_id" placeholder="Select Catalog" #singleSelect>
+          <mat-select-search [formControl]="catalogFilterCtrl"></mat-select-search>
+          <mat-option *ngFor="let catalog of filteredCatalogs | async" [value]="catalog.id">{{catalog.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="100%">
+        <mat-label>Description</mat-label>
+        <textarea matInput rows="4" formControlName="description"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="button-wrapper" fxLayout="row" fxLayout.lt-sm="row wrap" fxLayoutAlign="end center">
+    <button class="btn-default" type="submit" mat-raised-button [disabled]="personForm.invalid">
+      Save
+    </button>
+    <button type="reset" class="btn-cancel" [mat-dialog-close] mat-button>
+      Cancel
+    </button>
+  </div>
+</form>

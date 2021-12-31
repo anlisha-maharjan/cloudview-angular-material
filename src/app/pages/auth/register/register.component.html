@@ -5,9 +5,18 @@
     <h4>Sign Up <span style="display: block; font-size: 1.4rem;margin-top: 1rem;">Enter your details to create your
         account:</span></h4>
 
-    <form fxLayout="column" fxLayoutGap="16px" #formDirective="ngForm" [formGroup]="registerForm" (ngSubmit)="register(formDirective)">
+    <form fxLayout="column" fxLayoutGap="16px" #formDirective="ngForm" [formGroup]="registerForm"
+      (ngSubmit)="register(formDirective)">
 
       <div fxFlex="auto" fxLayout="column">
+        <mat-form-field appearance="outline" fxFlex="grow">
+          <mat-icon matPrefix>account_circle</mat-icon>
+          <mat-label>Company</mat-label>
+          <input matInput required formControlName="company_name" />
+          <mat-error *ngIf="company_name.errors?.required && company_name.touched"> Company is required</mat-error>
+          <mat-error *ngIf="company_name.errors?.pattern && company_name.touched"> No special characters allowed</mat-error>
+        </mat-form-field>
+
         <mat-form-field appearance="outline" fxFlex="grow">
           <mat-icon matPrefix>account_circle</mat-icon>
           <mat-label>Name</mat-label>
@@ -59,4 +68,7 @@
           class="forget-pass" routerLink='/login'>Sign In</a></p>
     </form>
   </div>
+</div>
+<div class="progress" *ngIf="isSpinnerVisible">
+  <mat-spinner></mat-spinner>
 </div>

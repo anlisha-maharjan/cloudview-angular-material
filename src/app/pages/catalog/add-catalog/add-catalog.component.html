@@ -1,13 +1,17 @@
 <form action="" #formDirective="ngForm" [formGroup]="catalogForm" (ngSubmit)="send(formDirective)">
-  <p>{{heading}}</p>
+  <h4 mat-dialog-title>{{heading}}</h4>
   <div class="default-form__group" fxLayout="column" fxLayoutGap="3rem">
     <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%">
       <mat-label>Name</mat-label>
-      <input matInput required formControlName="name" placeholder="Name" />
+      <input matInput required formControlName="name"  placeholder="Catalog Name"/>
       <mat-error *ngIf="name.invalid && name.touched">Name is required.</mat-error>
     </mat-form-field>
-
-    <quill-editor fxFlex="100%" [formControl]="catalogForm.controls['description']" [style]="{ height: '200px' }"></quill-editor>
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%">
+      <mat-label>Description</mat-label>
+      <textarea matInput rows="4" formControlName="description" placeholder="Insert Description" ></textarea>
+      <!-- <mat-error *ngIf="description.invalid && description.touched">Description is required.</mat-error> -->
+    </mat-form-field>
+    <!-- <quill-editor fxFlex="100%" [formControl]="catalogForm.controls['description']" [style]="{ height: '200px' }"></quill-editor> -->
   </div>
   <div class="button-wrapper" fxLayout="row" fxLayout.lt-sm="row wrap" fxLayoutAlign="end center">
     <button class="btn-default" type="submit" mat-raised-button [disabled]="catalogForm.invalid">

@@ -1,0 +1,199 @@
+@import "./var";
+
+cloudview-file-upload {
+  .custom-upload {
+    height: 38rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    text-align: center;
+
+    .up-button {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 0;
+      position: relative;
+      border: 1px solid #d4e0e6;
+      border-radius: 5px;
+      background-color: #f0f4f6;
+      color: #a9a9a9;
+      cursor: pointer;
+      z-index: 1;
+
+      h3 {
+        font-size: 2.3vh;
+        margin-bottom: 0.5rem;
+      }
+
+      h6 {
+        margin-bottom: 1.2rem;
+        font-weight: 500;
+      }
+
+      mat-icon {
+        width: 5rem;
+        height: 5rem;
+        margin: 0 0 2rem;
+        color: $primary-color;
+      }
+
+      .btn-dummy {
+        display: block;
+        padding: 1rem 4rem;
+        background-color: $primary-color;
+        color: #fff;
+      }
+
+      input {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 2;
+      }
+    }
+
+    .uploaded-files {
+      height: 100%;
+      margin: 2rem 0 0;
+      padding: 1rem;
+      overflow: auto;
+
+      &__wrap {
+        display: flex;
+
+        &__thumb {
+          width: 3.5rem;
+          height: 3.5rem;
+          margin: 0;
+          border: 1px solid #b0b0b0;
+          border-radius: 3px;
+          overflow: hidden;
+
+          img,
+          video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top left;
+          }
+
+          mat-icon {
+            width: 100%;
+            height: 100%;
+          }
+
+          &.no-border {
+            border: none;
+          }
+        }
+
+        &__info {
+          max-width: 80%;
+          margin: 0 2rem;
+          text-align: left;
+          line-height: 1;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+
+          .file-name {
+            display: block;
+            margin: 0 0 0.3rem;
+            font-size: 1.6rem;
+            font-weight: 500;
+          }
+
+          .file-size {
+            font-size: 1.4rem;
+            color: #777;
+          }
+        }
+
+        .btn-delete {
+          align-self: flex-start;
+          margin-left: 0.8rem;
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+
+          mat-icon {
+            width: 10px;
+            height: 10px;
+          }
+        }
+
+        &:not(:last-child) {
+          margin: 0 0 1.5rem;
+          padding-bottom: 1.5rem;
+          border-bottom: 1px solid #cac9c9;
+        }
+      }
+    }
+
+    &.fileup {
+      .up-button {
+        height: auto;
+      }
+    }
+
+    &.drageOver {
+      .up-button {
+        background-color: darken($color: #f0f4f6, $amount: 5);
+      }
+
+      .uploaded-files {
+        opacity: 0.5;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      flex-direction: row;
+
+      .up-button {
+        height: auto;
+      }
+
+      .uploaded-files {
+        width: calc(55% - 2rem);
+        margin: 0;
+      }
+
+      &.fileup {
+        .up-button {
+          width: 45%;
+          height: 100%;
+        }
+      }
+    }
+
+    /*========== Start File Upload Wrapper Design ==========*/
+    @at-root .file-upload-card {
+      background-color: #fdfdfd;
+
+      mat-card-title {
+        h5 {
+          padding: 1.1rem 0 2.5rem;
+          color: rgba($primary-color, 1);
+          font-size: 2.5vh;
+          font-weight: 500;
+          text-align: center;
+        }
+      }
+
+      .custom-upload {
+        margin: 0 auto 1.7rem;
+      }
+    }
+
+    /*========== End File Upload Wrapper Design ==========*/
+  }
+}

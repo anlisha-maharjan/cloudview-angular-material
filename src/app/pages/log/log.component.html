@@ -1,0 +1,62 @@
+<div class="padding breadcrumb-title-wrap">
+  <h2>Logs</h2>
+  <ul>
+    <li>
+      <a routerLink="/search">Dashboard</a>
+      <mat-icon>chevron_right</mat-icon>
+    </li>
+    <li>
+      <span>Logs</span>
+    </li>
+  </ul>
+</div>
+<section class="padding">
+  <mat-card class="log-list">
+    <div class="list-header" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px"
+      style="border-bottom: 1px solid #000;">
+      <div class="list-name">Logs</div>
+      <div class="table-filter-wrapper"></div>
+      <div class="actions">
+      </div>
+    </div>
+    <div class="log-list-body">
+      <form action="" #formDirective="ngForm" [formGroup]="logForm" (ngSubmit)="send(formDirective)">
+        <div fxLayout="row" fxLayout.lt-md="row wrap" fxLayoutAlign="start start">
+          <div class="right-filter">
+            <div class="row" fxLayout="row" fxLayout.lt-md="row wrap" fxLayoutAlign="start start">
+              <div class="cols" fxFlex="100%" fxFlex.gt-md="50%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Event Type</mat-label>
+                  <mat-select formControlName="type" placeholder="Select" (selectionChange)="onTypeChange($event)">
+                    <mat-option value="train">Train</mat-option>
+                    <mat-option value="untrain">UnTrain</mat-option>
+                    <mat-option value="camera_analysis">Camera Analysis</mat-option>
+                    <mat-option value="video_analysis">Video Analysis</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="cols" fxFlex="100%" fxFlex.gt-md="50%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input autocomplete="off" [owlDateTime]="dt1" (dateTimeChange)="onDateChange($event)" placeholder=""
+                    matInput formControlName="date">
+                  <span matSuffix [owlDateTimeTrigger]="dt1"><i class="fa fa-calendar"></i></span>
+                  <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <div class="cols" fxFlex="100%" fxFlex.gt-sm>
+        <ul class="log-list" *ngIf="logData && logData.length > 0">
+          <li *ngFor="let item of logData;let i=index">{{item}}</li>
+        </ul>
+        <div *ngIf="logData && logData.length === 0">No Logs Found</div>
+      </div>
+    </div>
+  </mat-card>
+</section>

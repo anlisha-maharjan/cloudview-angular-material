@@ -67,7 +67,7 @@ export class SidenavService {
       if (isLowerThanLarge && !(this.sidenavState === SidenavState.Mobile || this.sidenavState === SidenavState.MobileOpen)) {
         this.sidenavState = SidenavState.Mobile;
       } else if (!isLowerThanLarge) {
-        this.sidenavState = SidenavState.Expanded;
+        this.sidenavState = SidenavState.Collapsed;
       }
     });
   }
@@ -77,7 +77,7 @@ export class SidenavService {
    * @type {BehaviorSubject<SidenavState>}
    * @private
    */
-  private _sidenavState = new BehaviorSubject<SidenavState>(SidenavState.Expanded);
+  private _sidenavState = new BehaviorSubject<SidenavState>(SidenavState.Collapsed);
 
   sidenavState$ = this._sidenavState.asObservable();
 

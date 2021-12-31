@@ -2,7 +2,7 @@
   <h2>Profile</h2>
   <ul>
     <li>
-      <a routerLink="/">Dashboard</a>
+      <a routerLink="/search">Dashboard</a>
       <mat-icon>chevron_right</mat-icon>
     </li>
     <li>
@@ -10,26 +10,143 @@
     </li>
   </ul>
 </div>
-<section class="padding" fxLayout="row" fxLayoutAlign="center">
-  <!-- <form fxLayout="column" class="profile-form" #formDirective="ngForm" [formGroup]="profileForm">
-    <figure class="profile-image">
-      <img *ngIf="user.image" src="user.image" />
-      <img *ngIf="!user.image" src="/assets/img/avatars/1.jpg" />
-    </figure>
-    <div class="default-form__group" fxLayout="column">
-      <div class="default-form__group__fields">
-        <label>Name</label>
-        <input matInput style="font-size: 2rem;font-weight: 500;" required formControlName="fullName" />
-      </div>
-      <div class="default-form__group__fields">
-        <label>Email</label>
-        <input matInput required formControlName="email" />
-      </div>
+<section class="padding" fxLayout="row wrap" fxLayoutAlign="center">
+  <div fxLayout="row wrap" fxLayoutAlign="center" fxFlex="100%" fxFlex.gt-sm="75vw">
+    <div fxFlex="100%" fxFlex.gt-sm="24%">
+      <aside class="profile-right">
+
+        <mat-list class="profile-right__nav">
+          <mat-list-item (click)="changeActiveForm('profile')" [ngClass]="activeForm =='profile' ? 'active': ''">
+            <mat-icon svgIcon="icon-user"></mat-icon>
+            Profile
+          </mat-list-item>
+
+          <mat-list-item (click)="changeActiveForm('password')" [ngClass]="activeForm =='password' ? 'active': ''">
+            <mat-icon svgIcon="icon-lock"></mat-icon>
+            Change Password
+          </mat-list-item>
+
+        </mat-list>
+      </aside>
     </div>
-    <div class="button-wrapper" fxLayout="row" fxLayout.lt-sm="row wrap" fxLayoutAlign="center">
-      <button routerLink='/dashboard' class="btn-default" mat-button>
-        Cancel
+    <button mat-fab *ngIf="!editmode" type="button" (click)="disableForm(false)" class="floating-button">
+      <mat-icon>create</mat-icon>
+    </button>
+    <form *ngIf="activeForm == 'profile'" [formGroup]="profileForm" class="default-form" fxFlex="100%"
+      fxFlex.gt-sm="76%">
+      <div class="default-form__group row" fxLayout="row wrap">
+
+        <div fxFlex="100%" fxFlex.gt-sm="30%" class="cols">
+          <mat-card class="default-card user-img" [class.default-card--boxed]="!user.image"
+            style="padding: 0 !important;">
+            <img class="img-fluid" *ngIf="user.image" [src]="user.image" alt="">
+
+            <figure [class.default-card--boxed__thumb]="!user.image">
+              <mat-icon *ngIf="!user.image" svgIcon="icon-user"></mat-icon>
+            </figure>
+
+            <div *ngIf="editmode" class="default-card__action" [class.active]="editmode">
+              <button mat-mini-fab>
+                <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" (change)="handleFileInput($event.target.files)">
+                <mat-icon svgIcon="icon-camera"></mat-icon>
+              </button>
+
+              <button mat-mini-fab (click)="removePhoto()">
+                <mat-icon svgIcon="icon-trash"></mat-icon>
+              </button>
+            </div>
+          </mat-card>
+        </div>
+
+        <div fxFlex="100%" fxFlex.gt-sm="70%" class="cols">
+          <mat-card class="default-card">
+            <mat-card-header>
+              <mat-card-title>Profile Overview</mat-card-title>
+            </mat-card-header>
+
+            <div class="row" fxLayout="row wrap">
+              <div class="cols" fxFlex="100%" fxFlex.gt-sm="50%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Fullname</mat-label>
+                  <input required matInput type="text" formControlName="fullname">
+                  <mat-error *ngIf="fullname.invalid && fullname.touched">Name is required.</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="cols" fxFlex="100%" fxFlex.gt-sm="50%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Email Address</mat-label>
+                  <input matInput required type="text" placeholder="Email" formControlName="email">
+                  <mat-error *ngIf="email.invalid && email.touched">Email is required.</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="cols" fxFlex="100%" fxFlex.gt-sm="50%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Contact Phone</mat-label>
+                  <input matInput type="text" placeholder="Phone" formControlName="phone">
+                </mat-form-field>
+              </div>
+
+              <div class="cols" fxFlex="100%" fxFlex.gt-sm="50%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Address</mat-label>
+                  <input matInput type="text" formControlName="address">
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+
+      </div>
+      <button *ngIf="editmode" mat-fab matTooltip="Save Profile" type="button" (click)="onUpdateProfile()"
+        class="floating-button">
+        <mat-icon style="width: 1.8rem" svgIcon="icon-save"></mat-icon>
       </button>
-    </div>
-  </form> -->
+      <button *ngIf="editmode" mat-fab matTooltip="Cancel" type="button" (click)="disableForm(true)"
+        class="floating-button" style="background-color: #f44336 !important; right: 12rem;">
+        <mat-icon style="width: 1.8rem" svgIcon="icon-trash"></mat-icon>
+      </button>
+    </form>
+    <form *ngIf="activeForm == 'password'" [formGroup]="passwordForm" class="default-form" fxFlex="100%"
+      fxFlex.gt-sm="76%">
+      <div class="default-form__group row" fxLayout="row wrap">
+
+        <div fxFlex="100%" fxFlex.gt-sm="70%" class="cols">
+          <mat-card class="default-card">
+            <mat-card-header>
+              <mat-card-title>Change Password</mat-card-title>
+            </mat-card-header>
+
+            <div class="row" fxLayout="row wrap">
+              <div class="cols" fxFlex="100%" fxFlex.gt-sm="100%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Password</mat-label>
+                  <input required matInput type="text" formControlName="password">
+                  <mat-error *ngIf="password.invalid && password.touched">Password is required.</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="cols" fxFlex="100%" fxFlex.gt-sm="100%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Confirm Password</mat-label>
+                  <input required matInput type="text" formControlName="confirmPassword">
+                  <mat-error *ngIf="confirmPassword.invalid && confirmPassword.touched">Confirm Password is required.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+
+      </div>
+      <button *ngIf="editmode" mat-fab matTooltip="Change Password" type="button" (click)="onChangePassword()"
+        class="floating-button">
+        <mat-icon style="width: 1.8rem" svgIcon="icon-save"></mat-icon>
+      </button>
+      <button *ngIf="editmode" mat-fab matTooltip="Cancel" type="button" (click)="disableForm(true)"
+        class="floating-button" style="background-color: #f44336 !important; right: 12rem;">
+        <mat-icon style="width: 1.8rem" svgIcon="icon-trash"></mat-icon>
+      </button>
+    </form>
+  </div>
 </section>

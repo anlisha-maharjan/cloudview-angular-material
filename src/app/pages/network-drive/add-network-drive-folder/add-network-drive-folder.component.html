@@ -1,0 +1,25 @@
+<form action="" #formDirective="ngForm" [formGroup]="networkDriveFolderForm" (ngSubmit)="send(formDirective)">
+  <h4 mat-dialog-title>{{heading}}</h4>
+  <div class="default-form__group" fxLayout="row wrap" fxLayoutGap="3rem">
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="45%">
+      <mat-label>Name</mat-label>
+      <input matInput required formControlName="name" placeholder="Folder Name" />
+      <mat-error *ngIf="name.invalid && name.touched">Name is required.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="45%">
+      <mat-label>Path</mat-label>
+      <input matInput required formControlName="folder_path" placeholder="Folder Path" />
+      <mat-error *ngIf="folder_path.invalid && folder_path.touched"> Path is required.</mat-error>
+    </mat-form-field>
+
+  </div>
+  <div class="button-wrapper" fxLayout="row" fxLayout.lt-sm="row wrap" fxLayoutAlign="end center">
+    <button class="btn-default" type="submit" mat-raised-button [disabled]="networkDriveFolderForm.invalid">
+      Save
+    </button>
+    <button type="reset" class="btn-cancel" [mat-dialog-close] mat-button>
+      Cancel
+    </button>
+  </div>
+</form>

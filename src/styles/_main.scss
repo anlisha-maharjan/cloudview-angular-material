@@ -8,29 +8,42 @@ h6 {
 }
 
 h1 {
-  font-size: 4vh;
+  font-size: 3.318rem;
+  line-height: 4rem;
 }
 
 h2 {
-  font-size: 3.5vh;
+  font-size: 2.765rem;
+  line-height: 3.4rem;
 }
 
 h3 {
-  font-size: 3vh;
+  font-size: 2.304rem;
+  line-height: 2.8rem;
 }
 
 h4 {
-  font-size: 2.5vh;
+  font-size: 1.92rem;
+  line-height: 2.3rem;
 }
 
 h5 {
-  font-size: 2vh;
+  font-size: 1.6rem;
+  line-height: 1.9rem;
 }
 
 h6 {
-  font-size: 1.6rem;
+  font-size: 1.333rem;
+  line-height: 1.6rem;
 }
 
+figure {
+  margin: 0;
+}
+
+.text-left {
+  text-align: left;
+}
 /*========== Start common ==========*/
 
 .page-title {
@@ -44,30 +57,50 @@ h6 {
 }
 
 .row {
-  margin-left: -2rem;
-  margin-right: -2rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
 
   .cols {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    margin-bottom: 1.6rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
-/*========== End Common ==========*/
+.mat-card {
+  border-radius: 4px;
+  box-shadow: 0px 2px 2px #e6e9ed !important;
+}
+.canvas-pop__open {
+  cloudview-toolbar,
+  .sidenav {
+    z-index: -1 !important;
+  }
+}
+.seprator {
+  border-width: 1px;
+  border-color: #cecece;
+  border-style: solid;
 
+  &--horizontal {
+    margin: 3rem 0;
+  }
+}
+/*========== End Common ==========*/
 
 /*========== Start BreadCrumb Design ==========*/
 .breadcrumb-title-wrap {
-  height: 220px;
-  margin-bottom: -104px;
+  height: 200px;
+  margin-bottom: -85px;
   padding-top: 40px;
   padding-bottom: 64px;
   background-color: #1976d2;
   background: linear-gradient(to right, rgba(0, 77, 145, 1) 0%, rgba(25, 118, 210, 1) 100%);
 
   h2 {
-    margin: 0 0 .5rem;
+    margin: 0 0 0.5rem;
     color: #ffffff;
+    font-size: 1.92rem;
   }
 
   ul {
@@ -82,12 +115,12 @@ h6 {
       position: relative;
 
       mat-icon {
-        margin: 0 .5rem;
-        color: rgba(#ffffff, .87);
+        margin: 0 0.5rem;
+        color: rgba(#ffffff, 0.87);
       }
 
       a {
-        color: rgba(#ffffff, .87);
+        color: rgba(#ffffff, 0.87);
         text-decoration: none;
       }
 
@@ -96,7 +129,6 @@ h6 {
       }
 
       &:hover {
-
         a,
         mat-icon {
           color: #ffffff;
@@ -113,10 +145,151 @@ h6 {
 
 /*========== End BreadCrumb Design ==========*/
 
+/*========== Start Dropdown Design ==========*/
+.default-dropdown {
+  .mat-menu-content {
+    padding: 0 !important;
+
+    .mat-menu-item {
+      height: auto;
+      padding: 1rem;
+      font-size: 1.333rem;
+      line-height: 1;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid #eeeeee;
+      }
+    }
+  }
+}
+
+/*========== End Dropdown Design ==========*/
+
+/*========== Start Card Design ==========*/
+.list-card {
+  height: calc(100% - 1.6rem);
+  padding: 0 1.2rem 1.2rem !important;
+  border-radius: 4px !important;
+  box-shadow: 0px 2px 4px #e6e9ed !important;
+  overflow: hidden;
+
+  &__thumb {
+    width: calc(100% + 2.4rem);
+    height: 14rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0 -1.2rem 1.5rem;
+    background-color: #000000;
+
+    img,
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.65;
+
+      &.contain {
+        object-fit: contain;
+      }
+    }
+
+    .list-menu {
+      position: absolute;
+      right: 0;
+      top: 0;
+      color: #ffffff;
+      z-index: 1;
+    }
+
+    &__select {
+      position: absolute;
+      top: 1.2rem;
+      left: 1.2rem;
+      z-index: 1;
+
+      .mat-checkbox-frame {
+        border-color: #ffffff;
+      }
+    }
+  }
+
+  &__content {
+    h6 {
+      display: flex;
+      align-items: flex-start;
+      font-weight: 400;
+
+      mat-icon {
+        width: 1.6rem;
+        height: 1.6rem;
+        margin-right: 0.8rem;
+
+        svg {
+          * {
+            fill: $primary-color;
+          }
+        }
+      }
+
+      span {
+        width: calc(100% - 2.5rem);
+      }
+    }
+
+    &__title {
+      min-height: 3.6rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      font-size: 1.333rem;
+      font-weight: 600;
+      word-break: break-all;
+      overflow: hidden;
+    }
+
+    &__desc {
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+  &__action {
+  padding: 1.5rem 0 2.5rem;
+  }
+}
+
+.item-cards {
+  width: 100%;
+  min-height: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 2rem;
+  padding: 2rem;
+  border: 1px solid #d5d5d5;
+  border-radius: 4px;
+
+  &__title {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.8rem;
+
+    span {
+      display: block;
+      color: $color-4;
+    }
+  }
+}
+
+/*========== End Card Design ==========*/
+
 /*========== Start Default Form Design ==========*/
 mat-card.form-card {
   margin: 0 0 3rem;
-  box-shadow: 0 0 10px -5px rgba(0, 0, 0, .3);
+  box-shadow: 0 0 10px -5px rgba(0, 0, 0, 0.3);
 
   mat-card-title.mat-card-title {
     margin: 0 -25px 35px;
@@ -138,6 +311,10 @@ mat-card.form-card {
     mat-form-field {
       label.mat-form-field-label {
         color: $primary-color;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 2rem;
       }
     }
 
@@ -171,7 +348,7 @@ mat-card.form-card {
       }
     }
 
-    .clock-face__number>span.active {
+    .clock-face__number > span.active {
       background-color: $primary-color !important;
     }
 
@@ -207,7 +384,7 @@ mat-card.form-card {
     }
   }
 
-  @media(max-width: 992px) {
+  @media (max-width: 992px) {
     button {
       margin-bottom: 1rem;
     }
@@ -296,6 +473,7 @@ button.btn-cancel {
 .table-default {
   width: 100%;
   border-collapse: collapse;
+  text-align: left;
 
   thead {
     tr {
@@ -306,10 +484,6 @@ button.btn-cancel {
         color: $table-head-text-color;
         font-weight: 400;
         text-align: left;
-
-        &:not(:last-child) {
-          border-right: 1px solid #ffffff;
-        }
       }
     }
   }
@@ -345,7 +519,6 @@ button.btn-cancel {
     margin-bottom: 0;
 
     .mat-form-field-wrapper {
-
       margin-bottom: 0;
       padding-bottom: 0;
 
@@ -374,6 +547,58 @@ button.btn-cancel {
 
 /*========== End Default Table Design ==========*/
 
+/*========== Start Default Paginator Design ==========*/
+.paginator {
+  display: block;
+  padding: 1rem 0 0;
+  background: #fafafa;
+
+  .mat-paginator-container {
+    min-height: initial;
+    justify-content: space-between;
+
+    .mat-paginator-page-size {
+      width: auto;
+      color: $secondary-color;
+
+      .mat-paginator-page-size-select {
+        .mat-form-field-flex {
+          width: 7rem;
+          height: 3rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0.1rem 1rem;
+          border: 1px solid;
+          border-radius: 3px;
+          background-color: transparent;
+
+          .mat-form-field-infix {
+            width: auto;
+            padding: 0;
+            border: none;
+          }
+        }
+
+        .mat-form-field-underline {
+          display: none;
+        }
+
+        .mat-select-arrow-wrapper {
+          transform: translateY(-10%);
+        }
+      }
+    }
+
+    .mat-paginator-range-actions {
+      .mat-paginator-range-label {
+        color: $secondary-color;
+      }
+    }
+  }
+}
+/*========== End Default Paginator Design ==========*/
+
 /*========== Start Default Listing Design ==========*/
 .default-listing {
   margin: 0;
@@ -394,9 +619,9 @@ button.btn-cancel {
     }
 
     &:before {
-      width: .8rem;
-      height: .8rem;
-      top: .8rem;
+      width: 0.8rem;
+      height: 0.8rem;
+      top: 0.8rem;
       left: 0;
       background-color: $primary-color;
     }
@@ -453,7 +678,7 @@ button.btn-cancel {
       margin: -10px;
       padding: 40px 30px 30px;
       border-radius: 6px;
-      box-shadow: 0 6px 22px -8px rgba(0, 0, 0, .4);
+      box-shadow: 0 6px 22px -8px rgba(0, 0, 0, 0.4);
       background-color: #ffffff;
       text-align: center;
     }
@@ -529,7 +754,7 @@ button.btn-cancel {
       margin: -10px;
       padding: 40px 30px 30px;
       border-radius: 6px;
-      box-shadow: 0 6px 22px -8px rgba(0, 0, 0, .4);
+      box-shadow: 0 6px 22px -8px rgba(0, 0, 0, 0.4);
       background-color: #ffffff;
       text-align: center;
     }
@@ -546,6 +771,10 @@ button.btn-cancel {
       color: #777;
       font-size: 1.6rem;
       line-height: 2.5rem;
+
+      @media (min-width: 1024px) {
+        max-height: 70vh;
+      }
     }
 
     .mat-dialog-actions {
@@ -572,6 +801,16 @@ button.btn-cancel {
   }
 }
 
+.search-pop {
+  mat-dialog-container.mat-dialog-container {
+    .mat-dialog-content {
+      @media (min-width: 1024px) {
+        max-height: 100%;
+      }
+    }
+  }
+}
+
 .qr-modal {
   .mat-dialog-title {
     position: relative;
@@ -592,3 +831,181 @@ button.btn-cancel {
 }
 
 /*========== End Default Modal Design ==========*/
+
+/*========== Start File Upload Design ==========*/
+dropzone.default-file-upload {
+  .dropzone.dz-wrapper {
+    max-height: 30rem;
+    min-height: 11.15rem;
+    border: 1px solid $primary-color;
+    border-radius: 4px;
+    text-align: left;
+    overflow: auto;
+
+    .dz-message {
+      min-width: initial;
+      min-height: initial;
+      width: 100%;
+      height: 100%;
+      position: static;
+      margin: 0;
+      border: none;
+      text-align: center;
+
+      .dz-text {
+        left: 0;
+        padding: 0;
+        color: $primary-color;
+      }
+    }
+
+    &.dz-started {
+      .dz-message {
+        display: none !important;
+      }
+    }
+  }
+
+  .default-file-upload__preview {
+    min-height: initial;
+    width: 212px;
+    height: 5.7rem;
+    display: inline-flex;
+    border: 1px solid #777;
+    border-radius: 2px;
+
+    figure {
+      width: 30%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        display: none;
+        object-fit: cover;
+      }
+
+      i {
+        color: $primary-color;
+      }
+
+      .dz-error-mark,
+      .dz-success-mark {
+        display: none;
+      }
+    }
+
+    .dz-details {
+      max-width: initial;
+      min-width: initial;
+      width: 70%;
+      display: flex;
+      flex-wrap: wrap;
+      position: relative;
+      padding: 1rem 2rem 1rem 1rem !important;
+      opacity: 1 !important;
+      text-align: left;
+      line-height: 1;
+
+      > div {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .text-primary {
+        margin: 1rem 0 0;
+        color: $primary-color;
+
+        strong {
+          font-weight: 400;
+        }
+      }
+
+      .dz-error-message {
+        top: 100%;
+        opacity: 1;
+        z-index: 1;
+      }
+    }
+
+    &.dz-image-preview {
+      figure {
+        img {
+          display: block;
+        }
+
+        i {
+          display: none;
+        }
+      }
+    }
+
+    .remove {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      color: $color-4;
+      cursor: pointer;
+      z-index: 99;
+
+      i.fa.fa-trash {
+        position: static;
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+
+    i.fa.fa-trash {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      opacity: 0;
+    }
+  }
+}
+/*========== End File Upload Design ==========*/
+
+/*========== Start Owl Datepicker Design ==========*/
+owl-date-time-container.owl-dt-popup-container {
+  width: 23rem;
+  .owl-dt-calendar {
+    height: 26.25rem;
+  }
+  owl-date-time-calendar.owl-dt-container-row {
+    .owl-dt-calendar-control {
+      font-size: 1.6rem;
+      padding: 1rem;
+      .owl-dt-control-period-button {
+        font-size: 1.8rem;
+      }
+    }
+  }
+  .owl-dt-calendar-table {
+    .owl-dt-calendar-header {
+      .owl-dt-weekdays {
+        th {
+          font-size: 1rem;
+        }
+      }
+    }
+    .owl-dt-calendar-body {
+      .owl-dt-calendar-cell {
+        font-size: 1.3rem;
+      }
+    }
+  }
+  .owl-dt-container-buttons {
+    height: 3.2rem;
+    .owl-dt-container-control-button {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+/*========== End Owl Datepicker Design ==========*/

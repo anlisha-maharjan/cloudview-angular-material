@@ -44,6 +44,7 @@ export class ToolbarUserButtonComponent implements OnInit {
   }
 
   logout() {
+    localStorage.removeItem("companyName");
     this.authService.logout().subscribe(
       response => {
         this.router.navigate(["/login"]);

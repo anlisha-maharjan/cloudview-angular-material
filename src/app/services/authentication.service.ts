@@ -20,20 +20,19 @@ export class AuthenticationService {
     }));
   }
 
-  register(email: string, password: string, confirmPassword: string, fullName: string) {
-    // Set confirm_success_url to 'Verify-email UI'
+  register(company_name:string, email: string, password: string, confirmPassword: string, fullName: string) {
     return this.tokenService.registerAccount({
       login: email,
       password: password,
       passwordConfirmation: confirmPassword,
-      name: fullName
+      name: fullName,
+      company_name: company_name
     }).pipe(map(response => {
       return response;
     }));
   }
 
   forgotPassword(email: string) {
-    // Set redirect_url to 'Reset Password' UI
     return this.tokenService.resetPassword({
       login: email
     }).pipe(map(response => {

@@ -1,18 +1,30 @@
 <form action="" #formDirective="ngForm" [formGroup]="networkDriveForm" (ngSubmit)="send(formDirective)">
-  <p>{{heading}}</p>
+  <h4 mat-dialog-title>{{heading}}</h4>
   <div class="default-form__group" fxLayout="row wrap" fxLayoutGap="3rem">
-    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%">
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="45%">
       <mat-label>Name</mat-label>
-      <input matInput required formControlName="name" />
+      <input matInput required formControlName="name" placeholder="Network Drive Name" />
       <mat-error *ngIf="name.invalid && name.touched">Name is required.</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%">
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="45%">
       <mat-label>Path</mat-label>
-      <input matInput required formControlName="path" />
-      <mat-error *ngIf="path.invalid && path.touched">Path is required.</mat-error>
+      <input matInput required formControlName="path" placeholder="IP Address\path\to\shared\folder" />
+      <mat-error *ngIf="path.errors && path.errors.required && path.touched">Path is required.</mat-error>
+      <mat-error *ngIf="path.errors && path.errors.pattern && path.touched">Invalid Path</mat-error>
     </mat-form-field>
 
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="45%">
+      <mat-label>Username</mat-label>
+      <input matInput required formControlName="username" placeholder="Username" />
+      <mat-error *ngIf="username.invalid && username.touched">Username is required.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="45%">
+      <mat-label>Password</mat-label>
+      <input matInput required formControlName="password" placeholder="Password" />
+      <mat-error *ngIf="password.invalid && password.touched">Password is required.</mat-error>
+    </mat-form-field>
   </div>
   <div class="button-wrapper" fxLayout="row" fxLayout.lt-sm="row wrap" fxLayoutAlign="end center">
     <button class="btn-default" type="submit" mat-raised-button [disabled]="networkDriveForm.invalid">

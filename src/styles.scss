@@ -4,6 +4,7 @@
 @import "~highlight.js/styles/androidstudio.css";
 @import "~quill/dist/quill.snow.css";
 @import "~simplebar/dist/simplebar.css";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 
 @import "styles/var";
 @import "styles/variables";
@@ -38,6 +39,11 @@
 
 :root {
   font-size: 10px;
+}
+
+html,
+body {
+  font-size: 1.333rem;
 }
 
 * {

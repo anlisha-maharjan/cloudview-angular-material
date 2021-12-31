@@ -10,7 +10,7 @@ import { CatalogRoutingModule } from "./catalog-routing.module";
 import { CatalogComponent } from "./catalog.component";
 import { CatalogService } from "../../services/catalog.service";
 import { AddCatalogModule } from "./add-catalog/add-catalog.module";
-
+import { ViewCatalogModule } from "./view-catalog/view-catalog.module";
 @NgModule({
   imports: [
     CommonModule,
@@ -20,10 +20,11 @@ import { AddCatalogModule } from "./add-catalog/add-catalog.module";
     FormsModule,
     ListModule,
     AddCatalogModule,
+    ViewCatalogModule,
     // Core
-    AspectRatioModule
+    AspectRatioModule,
   ],
   declarations: [CatalogComponent],
-  providers: [CatalogService, DataService, AlertService]
+  providers: [CatalogService, DataService, AlertService],
 })
 export class CatalogModule {}

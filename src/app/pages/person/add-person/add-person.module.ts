@@ -1,4 +1,3 @@
-
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
@@ -7,8 +6,7 @@ import { AlertService } from "app/services/alert.service";
 import { PersonService } from "app/services/person.service";
 import { AddPersonRoutingModule } from "./add-person-routing.module";
 import { AddPersonComponent } from "./add-person.component";
-import { QuillModule } from 'ngx-quill';
-import {SlideshowModule} from 'ng-simple-slideshow';
+import { QuillModule } from "ngx-quill";
 @NgModule({
   imports: [
     CommonModule,
@@ -17,10 +15,9 @@ import {SlideshowModule} from 'ng-simple-slideshow';
     ReactiveFormsModule,
     FormsModule,
     QuillModule,
-    SlideshowModule
   ],
   providers: [AlertService, PersonService],
   declarations: [AddPersonComponent],
-  exports: [AddPersonComponent]
+  exports: [AddPersonComponent],
 })
-export class AddPersonModule { }
+export class AddPersonModule {}

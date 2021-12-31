@@ -1,0 +1,29 @@
+<h4 mat-dialog-title>{{heading}}</h4>
+<div class="view-camera">
+  <div class="row" fxLayout="row wrap">
+    <div class="cols" fxFlex="50%">
+      <div class="view-camera-row">
+        <span fxFlex="100%">Name</span>
+        <span fxFlex="100%">{{camera ? camera.name : ''}}</span>
+      </div>
+    </div>
+    <div class="cols" fxFlex="50%">
+      <div class="view-camera-row">
+        <span fxFlex="100%">Status</span>
+        <span fxFlex="100%">{{camera ? camera.status === 'active' ? 'Enabled': 'Disabled' : ''}}</span>
+      </div>
+    </div>
+    <div class="cols" fxFlex="100%">
+      <div class="view-camera-row">
+        <span fxFlex="100%">URL</span>
+        <span fxFlex="100%">{{camera ? camera.camera_url : ''}}</span>
+      </div>
+    </div>
+    <div class="cols" fxFlex="100%">
+      <div class="view-camera-row">
+        <span fxFlex="100%">Description</span>
+        <span fxFlex="100%">{{camera ? camera.description : ''}}</span>
+      </div>
+    </div>
+  </div>
+</div>

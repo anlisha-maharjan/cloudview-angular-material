@@ -34,6 +34,7 @@ export class RegisterComponent implements OnInit {
   visible = false;
   confirmPwdInputType = "password";
   confirmPwdVisible = false;
+  isSpinnerVisible:boolean = false;
   constructor(
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,
@@ -43,6 +44,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.fb.group({
+      company_name: ["", [Validators.required, Validators.pattern(/^[\w\s]+$/)]],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(8)]],
       confirmPassword: ["", [Validators.required]],
@@ -50,7 +52,9 @@ export class RegisterComponent implements OnInit {
     },
       { validator: passwordValidator });
   }
-
+  get company_name() {
+    return this.registerForm.get("company_name");
+  }
   get email() {
     return this.registerForm.get("email");
   }
@@ -67,13 +71,16 @@ export class RegisterComponent implements OnInit {
   register(formDirective: FormGroupDirective) {
     const getFormValue = this.registerForm.value;
     if (this.registerForm.valid) {
-      this.authService.register(getFormValue.email, getFormValue.password, getFormValue.confirmPassword, getFormValue.fullName).subscribe(
+      this.isSpinnerVisible = true;
+      this.authService.register(getFormValue.company_name, getFormValue.email, getFormValue.password, getFormValue.confirmPassword, getFormValue.fullName).subscribe(
         response => {
+          this.isSpinnerVisible = false;
           this.alertService.showInfoMessage("Info", "Registration successful. Please check your email for verification.", "dialog", "");
           formDirective.resetForm();
           this.registerForm.reset();
         },
         err => {
+          this.isSpinnerVisible = false;
           const error = err.error;
           this.alertService.showMessage(
             "Error",

@@ -1,6 +1,6 @@
 <form action="" #formDirective="ngForm" [formGroup]="videoForm" (ngSubmit)="send(formDirective)">
-  <h6>{{heading}}</h6>
-  <div class="default-form__group" fxLayout="row" fxLayoutGap="3rem">
+  <h4 mat-dialog-title>{{heading}}</h4>
+  <div class="default-form__group" fxLayout="row wrap" fxLayoutGap="2rem">
     <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="30%">
       <mat-label>Name</mat-label>
       <input matInput required formControlName="name" />
@@ -14,17 +14,34 @@
       </mat-select>
       <mat-error *ngIf="source.invalid && source.touched">Source is required.</mat-error>
     </mat-form-field>
-
     <mat-form-field *ngIf="source.value == 'network'" appearance="legacy" fxFlex="100%" fxFlex.gt-xs="30%">
-      <mat-select formControlName="network_drive_id" placeholder="Select Network Drive">
-        <mat-option *ngFor="let data of networkDriveList" [value]="data.id">{{data.name}}</mat-option>
+      <mat-select [formControl]="networkCtrl" formControlName="network_drive_id" placeholder="Select Network Drive" #singleSelect>
+        <mat-select-search [formControl]="networkFilterCtrl"></mat-select-search>
+        <mat-option *ngFor="let data of filteredNetworks | async" [value]="data.id">{{data.name}}</mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="100%">
+      <mat-label>Description</mat-label>
+      <textarea matInput rows="4" formControlName="description"></textarea>
+    </mat-form-field>
+
   </div>
-  <div class="default-form__group" fxLayout="row">
-    <quill-editor fxFlex="100%" [formControl]="videoForm.controls['description']" [style]="{ height: '200px' }">
-    </quill-editor>
-  </div>
+  <ng-container *ngIf="!editVideo">
+    <div class="default-form__group" fxLayout="row">
+      <!-- <quill-editor fxFlex="100%" [formControl]="videoForm.controls['description']" [style]="{ height: '200px' }">
+      </quill-editor> -->
+      <dropzone class="default-file-upload" [config]="config" (removedFile)="onFileRemove($event)"
+        (addedFile)="onFileAdded($event)"></dropzone>
+    </div>
+  </ng-container>
+
+  <figure *ngIf="editVideo && video">
+    <video style="width: 100%;" controls>
+      <source src="{{video.video_url}}" type="video/mp4" />
+      Browser not supported
+    </video>
+  </figure>
+
   <div class="button-wrapper" fxLayout="row" fxLayout.lt-sm="row wrap" fxLayoutAlign="end center">
     <button class="btn-default" type="submit" mat-raised-button [disabled]="videoForm.invalid">
       Save

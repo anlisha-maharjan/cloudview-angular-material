@@ -36,7 +36,7 @@ import { AngularTokenModule } from "angular-token";
     CoreModule,
     AppRoutingModule,
     AngularTokenModule.forRoot({
-      apiBase: "http://50.19.163.146/api/v1",
+      apiBase: "",
       apiPath: null,
 
       signInPath: "auth/sign_in",
@@ -49,11 +49,13 @@ import { AngularTokenModule } from "angular-token";
 
       registerAccountPath: "auth",
       deleteAccountPath: "auth",
-      registerAccountCallback: window.location.href,
+      // registerAccountCallback: window.location.href,
+      registerAccountCallback: environment.clientUrl,
 
       updatePasswordPath: "auth",
       resetPasswordPath: "auth/password",
-      resetPasswordCallback: window.location.href,
+      // resetPasswordCallback: window.location.href,
+      resetPasswordCallback: environment.clientUrl,
 
       oAuthBase: window.location.origin,
       oAuthPaths: {

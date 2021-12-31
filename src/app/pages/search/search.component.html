@@ -1,0 +1,639 @@
+<div class="padding breadcrumb-title-wrap">
+  <h2>Search</h2>
+  <ul>
+    <li>
+      <a routerLink="/search">Dashboard</a>
+      <mat-icon>chevron_right</mat-icon>
+    </li>
+    <li>
+      <span>Search</span>
+    </li>
+  </ul>
+</div>
+<section class="padding">
+  <mat-card class="search-list">
+    <div
+      class="list-header"
+      fxLayout="row wrap"
+      fxLayoutAlign="start center"
+      fxLayoutGap="8px"
+      fxLayoutGap.gt-xs="24px"
+      style="border-bottom: 1px solid #000;"
+    >
+      <div class="list-name">Search</div>
+      <div class="table-filter-wrapper"></div>
+      <div class="actions"></div>
+    </div>
+    <div class="search-list-body">
+      <form
+        action=""
+        #formDirective="ngForm"
+        [formGroup]="searchForm"
+        (ngSubmit)="send(formDirective)"
+      >
+        <div
+          fxLayout="row"
+          fxLayout.lt-md="row wrap"
+          fxLayoutAlign="start start"
+        >
+          <!-- <mat-checkbox color="primary" (click)="selectAll()">Select All</mat-checkbox> -->
+          <div class="right-filter">
+            <div
+              class="row"
+              fxLayout="row"
+              fxLayout.lt-md="row wrap"
+              fxLayoutAlign="start start"
+            >
+              <div class="cols" fxFlex="100%" fxFlex.gt-md="25%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Source</mat-label>
+                  <mat-select
+                    [formControl]="sourceMultiCtrl"
+                    formControlName="source_id"
+                    placeholder="Select"
+                    multiple
+                  >
+                    <mat-select-search
+                      [formControl]="sourceMultiFilterCtrl"
+                    ></mat-select-search>
+                    <mat-option value="all">All</mat-option>
+                    <mat-option
+                      *ngFor="let data of filteredSourcesMulti | async"
+                      [value]="data.id"
+                      >{{ data.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="cols" fxFlex="100%" fxFlex.gt-md="25%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Person</mat-label>
+                  <mat-select
+                    [formControl]="personMultiCtrl"
+                    formControlName="person_id"
+                    placeholder="Select"
+                    multiple
+                  >
+                    <mat-select-search
+                      [formControl]="personMultiFilterCtrl"
+                    ></mat-select-search>
+                    <mat-option value="all">All</mat-option>
+                    <mat-option value="unknown">Unknown</mat-option>
+                    <mat-option
+                      *ngFor="let data of filteredPersonsMulti | async"
+                      [value]="data.id"
+                      >{{ data.firstname }}
+                      {{ data.middlename }}
+                      {{ data.lastname }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="cols" fxFlex="100%" fxFlex.gt-md="25%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Start Date</mat-label>
+                  <input
+                    autocomplete="off"
+                    [owlDateTime]="dt1"
+                    placeholder=""
+                    matInput
+                    formControlName="start_time"
+                  />
+                  <span matSuffix [owlDateTimeTrigger]="dt1"
+                    ><i class="fa fa-calendar"></i
+                  ></span>
+                  <owl-date-time #dt1></owl-date-time>
+                  <!-- <input matInput formControlName="start_time" [matDatepicker]="dp" placeholder="">
+                  <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                  <mat-datepicker #dp></mat-datepicker> -->
+                </mat-form-field>
+              </div>
+
+              <div class="cols" fxFlex="100%" fxFlex.gt-md="25%">
+                <mat-form-field appearance="outline">
+                  <mat-label>End Date</mat-label>
+                  <input
+                    autocomplete="off"
+                    [owlDateTime]="dt2"
+                    placeholder=""
+                    matInput
+                    formControlName="end_time"
+                  />
+                  <span matSuffix [owlDateTimeTrigger]="dt2"
+                    ><i class="fa fa-calendar"></i
+                  ></span>
+                  <owl-date-time #dt2></owl-date-time>
+                  <!-- <input matInput formControlName="end_time" [matDatepicker]="dpr" placeholder="">
+                  <mat-datepicker-toggle matSuffix [for]="dpr"></mat-datepicker-toggle>
+                  <mat-datepicker #dpr></mat-datepicker> -->
+                </mat-form-field>
+              </div>
+              <button class="btn-default" type="submit" mat-button>
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="cols" fxFlex="100%" fxFlex.gt-sm>
+          <div
+            class="row"
+            fxLayout="row wrap"
+            *ngIf="dataList && dataList.length > 0"
+          >
+            <div
+              class="cols"
+              fxFlex="100%"
+              fxFlex-sm="33.333%"
+              [fxFlex.gt-md]="'18%'"
+              *ngFor="let item of dataList; let i = index"
+            >
+              <!-- <div class="row" fxLayout="row wrap" fxLayoutAlign="start start"> -->
+              <!-- <div class="cols" fxFlex="100%" fxFlex-sm="100%" fxFlex.gt-md="25%"> -->
+
+              <ng-container *ngIf="item.person_name === 'unknown'">
+                <a
+                  routerLink="/search/view-search-unknown/"
+                  [queryParams]="{
+                    start_time: start_time.value,
+                    end_time: end_time.value,
+                    source_id: source_id.value,
+                    person_id: person_id.value
+                  }"
+                  target="_blank"
+                  style="text-decoration: none;"
+                >
+                  <mat-card class="list-card">
+                    <figure class="list-card__thumb">
+                      <mat-icon
+                        svgIcon="icon-unknown"
+                        style="
+                          width: 100px;
+                          height: 100px;
+                          margin: auto;
+                          color: #ffffff;
+                        "
+                      >
+                      </mat-icon>
+                    </figure>
+                    <mat-card-content class="list-card__content">
+                      <h5 class="list-card__content__title">Unknown</h5>
+                      <!-- <h6>
+                        <mat-icon svgIcon="icon-user"></mat-icon>
+                        {{ item.detected_count }} times detected
+                      </h6>
+                      <p class="list-card__content__desc"></p> -->
+                    </mat-card-content>
+                  </mat-card>
+                </a>
+              </ng-container>
+
+              <ng-container *ngIf="item.person_name !== 'unknown'">
+                <!-- <a
+                  routerLink="/search/view-search/{{ item.person_id }}"
+                  [queryParams]="{
+                    start_time: start_time.value,
+                    end_time: end_time.value,
+                    source_id: source_id.value,
+                    person_id: person_id.value
+                  }"
+                  target="_blank"
+                  style="text-decoration: none;"
+                > -->
+                <mat-card class="list-card" (click)="openViewModal(view, item)">
+                  <figure class="list-card__thumb">
+                    <img class="contain" src="{{ item.img_url }}" />
+                  </figure>
+                  <mat-card-content class="list-card__content">
+                    <h5 class="list-card__content__title">
+                      Name : {{ item.person_name }}
+                    </h5>
+                    <!-- <div class="row" fxLayout="row wrap">
+                        <div class="cols" fxFlex="50%">
+                          <h6>
+                            <mat-icon svgIcon="icon-camera"></mat-icon>
+                            Camera - {{ item.camera_count }}
+                          </h6>
+                          <h6>
+                            <mat-icon svgIcon="icon-user"></mat-icon>
+                            {{ item.camera_detected_count }} times detected
+                          </h6>
+                        </div>
+                        <div class="cols" fxFlex="50%">
+                          <h6>
+                            <mat-icon svgIcon="icon-video"></mat-icon>
+                            Video - {{ item.video_count }}
+                          </h6>
+                          <h6>
+                            <mat-icon svgIcon="icon-user"></mat-icon>
+                            {{ item.video_detected_count }} times detected
+                          </h6>
+                        </div>
+                      </div> -->
+                    <!-- <h6>
+                        <mat-icon svgIcon="icon-alert"></mat-icon>
+                        {{ item.visit_count }} Visit count
+                      </h6>
+                      <p class="list-card__content__desc"></p> -->
+                  </mat-card-content>
+                </mat-card>
+                <!-- </a> -->
+              </ng-container>
+
+              <!-- </div> -->
+
+              <!-- <div class="cols" fxFlex="100%" fxFlex-sm="100%" fxFlex.gt-md="55%"></div>
+
+                  <div class="cols" fxFlex="100%" fxFlex-sm="100%" fxFlex.gt-md="20%">
+                    <div class="item-cards">
+                      <h3 class="item-cards__title">
+                        <span>15</span>
+                        Local Videos
+                      </h3>
+                    </div>
+                    <div class="item-cards">
+                      <h3 class="item-cards__title">
+                        <span>5</span>
+                        Network Drives
+                      </h3>
+                    </div>
+                  </div> -->
+              <!-- </div> -->
+              <!-- <hr class="seprator seprator--horizontal" *ngIf="i+1 !== dataList.length"> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p *ngIf="dataList && dataList.length == 0">No Data</p>
+      <mat-paginator
+        #paginator
+        (page)="onPageChange($event)"
+        class="paginator"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[20, 40, 60, 80, 100]"
+        [length]="pageLength"
+      >
+      </mat-paginator>
+    </div>
+  </mat-card>
+</section>
+
+<ng-template #view>
+  <span class="modal-icon">
+    <mat-icon svgIcon="icon-user"></mat-icon>
+  </span>
+  <div class="modal-content-wrap">
+    <mat-dialog-content>
+      <div class="row" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div class="cols" fxFlex="20%">
+          <mat-card class="list-card">
+            <figure class="list-card__thumb">
+              <img
+                *ngIf="activePerson"
+                class="contain"
+                src="{{ activePerson.img_url }}"
+              />
+            </figure>
+            <mat-card-content class="list-card__content">
+              <h5 class="list-card__content__title">
+                Name : {{ activePerson ? activePerson.person_name : "" }}
+              </h5>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="cols" fxFlex="80%">
+          <mat-tab-group class="search-tab">
+            <mat-tab label="Video Cameras">
+              <div class="row" fxLayout="row wrap">
+                <div
+                  class="cols"
+                  fxFlex="100%"
+                  fxFlex-sm="100%"
+                  fxFlex.gt-md="20%"
+                >
+                  <div class="item-cards">
+                    <h3 class="item-cards__title">
+                      <span>{{
+                        videoCameraData ? videoCameraData.cameras_count : 0
+                      }}</span>
+                      Cameras
+                    </h3>
+                  </div>
+                  <div class="item-cards">
+                    <h3 class="item-cards__title">
+                      <span>{{
+                        videoCameraData ? videoCameraData.visit_count : 0
+                      }}</span>
+                      Visits
+                    </h3>
+                  </div>
+                  <div class="item-cards">
+                    <h3 class="item-cards__title">
+                      <span
+                        *ngIf="videoCameraData"
+                        style="font-size: 1.4rem;"
+                        >{{
+                          videoCameraData.earliest_visit
+                            | date: "MMMM d, y (h:mm)"
+                        }}</span
+                      >
+                      Earliest Visit
+                    </h3>
+                  </div>
+                  <div class="item-cards">
+                    <h3 class="item-cards__title">
+                      <span
+                        *ngIf="videoCameraData"
+                        style="font-size: 1.4rem;"
+                        >{{
+                          videoCameraData.latest_visit
+                            | date: "MMMM d, y (h:mm)"
+                        }}</span
+                      >
+                      Latest Visit
+                    </h3>
+                  </div>
+                </div>
+                <div
+                  class="cols"
+                  fxFlex="100%"
+                  fxFlex-sm="100%"
+                  fxFlex.gt-md="80%"
+                  *ngIf="videoCameraBarChart && videoCameraBarChart.length > 0"
+                >
+                  <ngx-charts-bar-vertical
+                    [view]="view"
+                    [results]="videoCameraBarChart"
+                    [gradient]="gradient"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [xAxisLabel]="xAxisLabel"
+                    [yAxisLabel]="yAxisLabel"
+                    (select)="onBarChartSelect($event)"
+                  >
+                  </ngx-charts-bar-vertical>
+                </div>
+                <!-- <div
+                  class="cols"
+                  fxFlex="100%"
+                  fxFlex-sm="100%"
+                  fxFlex.gt-md="100%"
+                  *ngIf="activeVideoCamera"
+                > -->
+                <div
+                  class="cols"
+                  fxFlex="100%"
+                  fxFlex-sm="100%"
+                  fxFlex.gt-md="100%"
+                >
+                  <mat-divider style="margin: 3rem 0;"></mat-divider>
+                  <div class="row" fxLayout="row wrap" fxLayoutAlign="center">
+                    <div
+                      class="cols"
+                      fxFlex="100%"
+                      fxFlex-sm="100%"
+                      fxFlex.gt-md="20%"
+                    >
+                      <div class="item-cards">
+                        <h3 class="item-cards__title">
+                          <span>6 Visits</span>
+                          <!-- {{ activeVideoCamera.camera_name }} -->
+                          Camera 1
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                  <table class="table-default">
+                    <thead>
+                      <tr>
+                        <th>NAME</th>
+                        <th>DATE</th>
+                        <th>ACTION</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- <tr
+                        *ngFor="
+                          let item of activeVideoCameraDataList;
+                          let i = index
+                        "
+                      > -->
+                      <tr>
+                        <td>1.mov</td>
+                        <td>15 June, 2020</td>
+                        <td>
+                          <span>
+                            <mat-icon>play_circle_outline</mat-icon>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <mat-paginator
+                    #activeVideoCameraPaginator
+                    (page)="onActiveVideoCameraPageChange($event)"
+                    class="paginator"
+                    [pageSize]="activeVideoCameraDataListPageSize"
+                    [pageSizeOptions]="[20, 40, 60, 80, 100]"
+                    [length]="activeVideoCameraDataListPageLength"
+                  >
+                  </mat-paginator>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Video Files">
+              <div class="row" fxLayout="row wrap" fxLayoutAlign="center">
+                <div
+                  class="cols"
+                  fxFlex="100%"
+                  fxFlex-sm="100%"
+                  fxFlex.gt-md="20%"
+                >
+                  <div class="item-cards">
+                    <h3 class="item-cards__title">
+                      <span>{{ videoFilesCount }}</span>
+                      Video Files
+                    </h3>
+                  </div>
+                </div>
+              </div>
+
+              <table class="table-default">
+                <thead>
+                  <tr>
+                    <th>NAME</th>
+                    <th>DATETIME</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of videoFiles; let i = index">
+                    <td>
+                      {{ item.name }}
+                    </td>
+                    <td>
+                      {{ item.datetime | date: "MMMM d, y h:mm" }}
+                    </td>
+                    <td>
+                      <span>
+                        <mat-icon>play_circle_outline</mat-icon>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <mat-paginator
+                #videoFilesPaginator
+                (page)="onVideoFilesPageChange($event)"
+                class="paginator"
+                [pageSize]="videoFilesPageSize"
+                [pageSizeOptions]="[20, 40, 60, 80, 100]"
+                [length]="videoFilesPageLength"
+              >
+              </mat-paginator>
+            </mat-tab>
+            <mat-tab label="Network Drives">
+              <div class="row" fxLayout="row wrap">
+                <div
+                  class="cols"
+                  fxFlex="100%"
+                  fxFlex-sm="100%"
+                  fxFlex.gt-md="20%"
+                >
+                  <div class="item-cards">
+                    <h3 class="item-cards__title">
+                      <span>{{
+                        networkDriveData
+                          ? networkDriveData.network_drive_count
+                          : 0
+                      }}</span>
+                      Network Drives
+                    </h3>
+                  </div>
+                  <div class="item-cards">
+                    <h3 class="item-cards__title">
+                      <span>{{
+                        networkDriveData ? networkDriveData.folder_count : 0
+                      }}</span>
+                      Folders
+                    </h3>
+                  </div>
+                  <div class="item-cards">
+                    <h3 class="item-cards__title">
+                      <span
+                        *ngIf="networkDriveData"
+                        style="font-size: 1.4rem;"
+                        >{{
+                          networkDriveData.earliest_visit
+                            | date: "MMMM d, y (h:mm)"
+                        }}</span
+                      >
+                      Earliest Visit
+                    </h3>
+                  </div>
+                  <div class="item-cards">
+                    <h3 class="item-cards__title">
+                      <span
+                        *ngIf="networkDriveData"
+                        style="font-size: 1.4rem;"
+                        >{{
+                          networkDriveData.latest_visit
+                            | date: "MMMM d, y (h:mm)"
+                        }}</span
+                      >
+                      Latest Visit
+                    </h3>
+                  </div>
+                </div>
+                <div
+                  class="cols"
+                  fxFlex="100%"
+                  fxFlex-sm="100%"
+                  fxFlex.gt-md="80%"
+                  *ngIf="
+                    networkDrivePieChart && networkDrivePieChart.length > 0
+                  "
+                >
+                  <ngx-charts-pie-chart
+                    [view]="pieView"
+                    [results]="networkDrivePieChart"
+                    [gradient]="pieGradient"
+                    [legend]="showPieLegend"
+                    [labels]="showLabels"
+                    [doughnut]="isDoughnut"
+                    (select)="onPieChartSelect($event)"
+                  >
+                  </ngx-charts-pie-chart>
+                </div>
+                <div
+                  class="cols"
+                  fxFlex="100%"
+                  fxFlex-sm="100%"
+                  fxFlex.gt-md="100%"
+                  *ngIf="activeNetworkDriveFolder"
+                >
+                  <mat-divider style="margin: 3rem 0;"></mat-divider>
+                  <div class="row" fxLayout="row wrap" fxLayoutAlign="center">
+                    <div
+                      class="cols"
+                      fxFlex="100%"
+                      fxFlex-sm="100%"
+                      fxFlex.gt-md="20%"
+                    >
+                      <div class="item-cards">
+                        <h3 class="item-cards__title">
+                          <span>6 Visits</span>
+                          {{ activeNetworkDriveFolder.folder_name }}:{{
+                            activeNetworkDriveFolder.network_drive_name
+                          }}
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                  <table class="table-default">
+                    <thead>
+                      <tr>
+                        <th>NAME</th>
+                        <th>DATE</th>
+                        <th>ACTION</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- <tr
+                        *ngFor="let item of activeFolderDataList; let i = index"
+                      > -->
+                      <tr>
+                        <td>1.mov</td>
+                        <td>15 June, 2020</td>
+                        <td>
+                          <span>
+                            <mat-icon>play_circle_outline</mat-icon>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <mat-paginator
+                    #activeFolderPaginator
+                    (page)="onActiveFolderPageChange($event)"
+                    class="paginator"
+                    [pageSize]="activeFolderDataListPageSize"
+                    [pageSizeOptions]="[20, 40, 60, 80, 100]"
+                    [length]="activeFolderDataListPageLength"
+                  >
+                  </mat-paginator>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </mat-dialog-content>
+  </div>
+</ng-template>

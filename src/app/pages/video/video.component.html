@@ -1,78 +1,180 @@
 <div class="padding breadcrumb-title-wrap">
-  <h2>Video</h2>
+  <h2>Video Files</h2>
   <ul>
     <li>
-      <a routerLink="/">Dashboard</a>
+      <a routerLink="/search">Dashboard</a>
       <mat-icon>chevron_right</mat-icon>
     </li>
     <li>
-      <span>Video</span>
+      <span>Video Files</span>
     </li>
   </ul>
 </div>
+
 <section class="padding">
-  <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="3rem">
-    <mat-card fxFlex="100%" class="video-list">
+  <mat-card class="video-list">
+    <div class="list-header" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px"
+      style="border-bottom: 1px solid #000;">
+      <div class="list-name">Video Files</div>
 
-      <div class="list-header" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="8px"
-        fxLayoutGap.gt-xs="24px" style="border-bottom: 1px solid #000; padding-bottom: 2rem;">
-        <div class="list-name">Video</div>
-
-        <div class="table-filter-wrapper">
-          <mat-icon class="filter-input-icon">search</mat-icon>
-          <input fxFlex class="filter-input" (change)="onSearch($event)" placeholder="Search&hellip;">
-        </div>
-
-        <div class="actions">
-          <button class="create" type="button" mat-stroked-button color="primary" (click)="openAddModal(add)">
-            <mat-icon svgIcon="icon-add"></mat-icon>
-          </button>
-        </div>
-        <div class="actions">
-          <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" fxFlex.gt-xs="50%">
-            <mat-select [(value)]="filter" (selectionChange)="filterVideos()">
-              <mat-option value="all">All</mat-option>
-              <mat-option value="upload">Uploaded</mat-option>
-              <mat-option value="network">Network</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+      <div class="table-filter-wrapper">
+        <!-- <mat-icon class="filter-input-icon">search</mat-icon>
+        <input fxFlex class="filter-input" (change)="onSearch($event)" placeholder="Search&hellip;"> -->
       </div>
-      <div class="video-list-body">
-        <div class="row" fxLayout="row wrap">
-          <div class="cols" fxFlex="33.333%" *ngFor="let video of videoList">
-            <mat-card>
-              <mat-card-header>
-                <div mat-card-avatar class="video-header-image"></div>
-                <mat-card-title>{{video.name}}</mat-card-title>
-                <mat-card-subtitle>John Doe</mat-card-subtitle>
-              </mat-card-header>
-              <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
-              <mat-card-content>
-                <p>
-                  {{video.description}}
-                </p>
-              </mat-card-content>
-              <mat-card-actions>
-                <button mat-button (click)="openEditModal(edit, video)" matTooltip="Edit" Class="default-tool-tip"
-                  mat-icon-button>
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-button (click)="openDeleteModal(delete, video)" matTooltip="Delete" Class="default-tool-tip"
-                  mat-icon-button>
-                  <mat-icon svgIcon="icon-trash"></mat-icon>
-                </button>
-                <button mat-button (click)="download(video)" matTooltip="Download" Class="default-tool-tip"
-                  mat-icon-button>
-                  <mat-icon svgIcon="icon-download"></mat-icon>
-                </button>
-              </mat-card-actions>
-            </mat-card>
+      <div class="actions">
+        <button class="create" type="button" mat-stroked-button color="primary" (click)="openAddModal(add)">
+          <mat-icon svgIcon="icon-add"></mat-icon>
+        </button>
+        <button *ngIf="videoIds && videoIds.length > 0" (click)="deleteMultiple()" class="create" type="button"
+          mat-stroked-button matTooltip="Delete" Class="default-tool-tip">
+          <mat-icon svgIcon="icon-trash"></mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="video-list-body">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between start">
+        <mat-checkbox color="primary" (click)="selectAllVideo()">Select All</mat-checkbox>
+        <div class="right-filter">
+          <div class="row" fxLayout="row wrap">
+            <div class="cols" fxFlex="100%" fxFlex.gt-sm="100%">
+              <mat-form-field appearance="outline" fxFlex="100%">
+                <mat-select placeholder="Select" (selectionChange)="onFilter($event)">
+                  <mat-option value="all">All</mat-option>
+                  <mat-option value="local">Local</mat-option>
+                  <mat-option value="network">Network</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
         </div>
       </div>
-    </mat-card>
-  </div>
+
+      <div class="row">
+        <div class="cols" [fxHide.lt-md]="activeVideo && activeVideo.id" fxFlex="100%" fxFlex.gt-sm>
+          <div class="row" fxLayout="row wrap" *ngIf="videoList && videoList.length > 0">
+            <div class="cols" fxFlex="100%" fxFlex-sm="33.333%"
+              [fxFlex.gt-md]="activeVideo && activeVideo.id ? '50%': '20%'" *ngFor="let video of videoList;let i=index">
+              <mat-card class="list-card">
+                <figure class="list-card__thumb">
+                  <mat-checkbox class="list-card__thumb__select" [checked]="allVideoSelected"
+                    (click)="selectVideo(video)">
+                  </mat-checkbox>
+
+                  <video (click)="onToggle(video)" style="cursor: pointer;">
+                    <source src="{{video.video_url}}" type="video/mp4" />
+                    Browser not supported
+                  </video>
+
+                  <!-- <button class="list-menu" mat-icon-button [matMenuTriggerFor]="cardListDrop">
+                    <mat-icon>more_vert</mat-icon>
+                  </button> -->
+                </figure>
+
+                <mat-card-content class="list-card__content">
+                  <h5 class="list-card__content__title">
+                    {{video.name}} ({{video.filename}})</h5>
+                  <h6 *ngIf="video.source == 'network'">
+                    <mat-icon svgIcon="icon-upload"></mat-icon>
+                    <span>Network - {{video.network_drive}}</span>
+                  </h6>
+                  <h6 *ngIf="video.source == 'local'">
+                    <mat-icon svgIcon="icon-upload"></mat-icon>
+                    <span>Local</span>
+                  </h6>
+                  <!-- queued starting capturing analyzing analyzed -->
+                  <h6 *ngIf="video.status == 'queued'">
+                    <mat-icon svgIcon="icon-duration"></mat-icon>
+                    Status - Queued
+                  </h6>
+                  <h6 *ngIf="video.status == 'starting'">
+                    <mat-icon svgIcon="icon-duration"></mat-icon>
+                    Status - Starting
+                  </h6>
+                  <h6 *ngIf="video.status == 'capturing'">
+                    <mat-icon svgIcon="icon-train"></mat-icon>
+                    Status - Capturing
+                  </h6>
+                  <h6 *ngIf="video.status == 'analyzing'">
+                    <mat-icon svgIcon="icon-train"></mat-icon>
+                    Status - Analyzing
+                  </h6>
+                  <h6 *ngIf="video.status == 'analyzed'">
+                    <mat-icon svgIcon="icon-correct"></mat-icon>
+                    Status - Analyzed
+                  </h6>
+                  <p class="list-card__content__desc">
+                    {{video.description && video.description !== 'null' ? video.description.length > 100 ? video.description.substring(0, 100) + "..." : video.description : ''}}
+                  </p>
+                  <div class="list-card__action" fxLayout="row wrap" fxLayoutAlign="space-around center">
+                    <button *ngIf="video.show_analyze_button" (click)="onAnalyze(video)" matTooltip="Analyze"
+                      Class="default-tool-tip" mat-mini-fab>
+                      <mat-icon svgIcon="icon-train"></mat-icon>
+                    </button>
+                    <button (click)="openEditModal(edit, video)" matTooltip="Edit" Class="default-tool-tip"
+                      mat-mini-fab>
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button (click)="openDeleteModal(delete, video)" matTooltip="Delete" Class="default-tool-tip"
+                      mat-mini-fab>
+                      <mat-icon svgIcon="icon-trash"></mat-icon>
+                    </button>
+                    <button (click)="onDownload(video)" matTooltip="Delete" Class="default-tool-tip" mat-mini-fab>
+                      <mat-icon svgIcon="icon-download"></mat-icon>
+                    </button>
+                    <button (click)="openLogModal(log,video)" matTooltip="Video Log" Class="default-tool-tip"
+                      mat-mini-fab>
+                      <mat-icon svgIcon="icon-setting"></mat-icon>
+                    </button>
+                  </div>
+                </mat-card-content>
+
+                <!-- <mat-menu class="default-dropdown" #cardListDrop="matMenu" xPosition="before">
+                  <button *ngIf="video.show_analyze_button" mat-menu-item (click)="onAnalyze(video)">
+                    Analyze
+                  </button>
+                  <button mat-menu-item (click)="openEditModal(edit, video)">
+                    Edit
+                  </button>
+                  <button mat-menu-item (click)="openDeleteModal(delete, video)">
+                    Delete
+                  </button>
+                  <button mat-menu-item (click)="onDownload(video)">
+                    Download
+                  </button>
+
+                </mat-menu> -->
+              </mat-card>
+            </div>
+          </div>
+          <mat-paginator #paginator (page)="onPageChange($event)" class="paginator" [pageSize]="pageSize"
+            [pageSizeOptions]="[20, 40, 60, 80, 100]" [length]="pageLength">
+          </mat-paginator>
+        </div>
+
+        <div *ngIf="activeVideo && activeVideo.id" class="cols" fxFlex="100%" fxFlex.gt-sm="50%">
+          <div class="video-view">
+            <div class="video-view__head" fxLayout="row wrap" fxLayoutAlign="space-between center">
+              <h6 style="word-break: break-all;" fxFlex="80%">{{activeVideo.filename}}</h6>
+
+              <button (click)="onClose()" type="button" mat-icon-button>
+                <mat-icon class="close">close</mat-icon>
+              </button>
+            </div>
+
+            <figure>
+              <video controls #videoPlayer>
+                <source src="{{activeVideo.video_url}}" type="video/mp4" />
+                Browser not supported
+              </video>
+            </figure>
+
+            <p>{{activeVideo.description !== 'null' ? activeVideo.description : ''}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
 </section>
 
 <ng-template #add>
@@ -115,3 +217,168 @@
     </div>
   </div>
 </ng-template>
+
+<ng-template #log>
+  <span class="modal-icon">
+    <mat-icon svgIcon="icon-setting"></mat-icon>
+  </span>
+  <div class="modal-content-wrap">
+    <mat-dialog-content>
+      <ng-container *ngIf="logs && logs.length > 0">
+        <table class="table-default">
+          <thead>
+            <tr>
+              <th>LOG OF</th>
+              <th>LOG TYPE</th>
+              <th>DATE</th>
+              <th>MESSAGE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of logs;let i=index">
+              <td>{{item.loggable_type}}</td>
+              <td>{{item.log_type}}</td>
+              <td>{{item.log_timestamp | date: 'yyyy-MM-dd HH:mm'}}</td>
+              <td>{{item.message}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <mat-paginator #logPaginator (page)="onLogPageChange($event)" class="paginator" [pageSize]="logPageSize"
+          [pageSizeOptions]="[20, 40, 60, 80, 100]" [length]="logPageLength">
+        </mat-paginator>
+      </ng-container>
+      <div *ngIf="logs && logs.length === 0">No Logs Found</div>
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+
+<ng-template #createPerson>
+  <span class="modal-icon">
+    <mat-icon svgIcon="icon-add-user"></mat-icon>
+  </span>
+  <div class="modal-content-wrap">
+    <mat-dialog-content>
+      <cloudview-create-person [id]="faceId" (refresh)="onRefresh()"></cloudview-create-person>
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #associatePerson>
+  <span class="modal-icon">
+    <mat-icon svgIcon="icon-user"></mat-icon>
+  </span>
+  <div class="modal-content-wrap">
+    <mat-dialog-content>
+      <cloudview-associate-person [id]="faceId" (refresh)="onRefresh()"></cloudview-associate-person>
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #changePerson>
+  <span class="modal-icon">
+    <mat-icon svgIcon="icon-change"></mat-icon>
+  </span>
+  <div class="modal-content-wrap">
+    <mat-dialog-content>
+      <cloudview-associate-person title="Change Person" [id]="faceId" (refresh)="onRefresh()">
+      </cloudview-associate-person>
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #deletePerson>
+  <span class="modal-icon">
+    <mat-icon svgIcon="icon-trash"></mat-icon>
+  </span>
+  <div class="modal-content-wrap">
+    <mat-dialog-content>
+      Are you sure?
+    </mat-dialog-content>
+    <div mat-dialog-actions>
+      <button mat-button [mat-dialog-close]>
+        Cancel
+      </button>
+      <button mat-button [mat-dialog-close] (click)="deleteFace()" class="btn-default btn-red">
+        Delete
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<div class="canvas-popup" *ngIf="show">
+  <div class="canvas-popup__content">
+    <button class="canvas-popup__close" (click)="onPopupClose()" type="button" mat-icon-button>
+      <mat-icon class="close">close</mat-icon>
+    </button>
+
+    <ng-container *ngIf="searchList && searchList.length > 0">
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let item of searchList;let i=index">
+          <ng-template carouselSlide>
+            <canvas [width]="windowWidth" [height]="windowHeight" class="canvas-popup__img" #searchCanvas></canvas>
+
+            <div class="canvas-popup__content__list" [class.open]="showAccurancyDetail">
+              <ng-container *ngIf="item.faces && item.faces.length > 0">
+                <div *ngFor="let data of item.faces;let j=index">
+                  <h6 class="canvas-popup__head">
+                    {{data.recognized ? 'Recognized' : 'Unrecognized'}}
+                  </h6>
+
+                  <div fxLayout="row wrap" fxLayoutAlign="space-between">
+                    <figure>
+                      <canvas #cropCanvas [attr.data-id]="i" [attr.data-class]="j"></canvas>
+                    </figure>
+                    <figure *ngIf="data.recognized">
+                      <img [src]="data.person_image.image" alt="">
+                    </figure>
+                  </div>
+                  <h6 *ngIf="data.recognized">Name :
+                    {{data.person_name}}
+                  </h6>
+                  <h6 *ngIf="data.recognized">Accurancy:
+                    {{data.accuracy ? data.accuracy.toFixed(3) : 0 }}%</h6>
+                  <h6>
+                    {{data.timestamp | date: 'yyyy-MM-dd HH:mm'}}
+                  </h6>
+
+                  <div style="margin: 4rem 0;" fxLayout="row wrap" fxLayoutAlign="space-around center">
+                    <ng-container *ngIf="data.recognized">
+                      <button type="button" mat-mini-fab matTooltip="Change Person" Class="default-tool-tip"
+                        (click)="openChangePersonModal(changePerson, data)">
+                        <mat-icon svgIcon="icon-change"></mat-icon>
+                      </button>
+                    </ng-container>
+                    <ng-container *ngIf="!data.recognized">
+                      <button type="button" mat-mini-fab matTooltip="Associate Person" Class="default-tool-tip"
+                        (click)="openAssociatePersonModal(associatePerson, data)">
+                        <mat-icon svgIcon="icon-user"></mat-icon>
+                      </button>
+                    </ng-container>
+                    <button type="button" mat-mini-fab matTooltip="Create Person" Class="default-tool-tip"
+                      (click)="openCreatePersonModal(createPerson, data)">
+                      <mat-icon svgIcon="icon-add-user"></mat-icon>
+                    </button>
+                    <button type="button" mat-mini-fab matTooltip="Delete" Class="default-tool-tip"
+                      (click)="openPersonDeleteModal(deletePerson, data)">
+                      <mat-icon svgIcon="icon-trash"></mat-icon>
+                    </button>
+                  </div>
+
+                  <hr class="seprator seprator--horizontal">
+                </div>
+              </ng-container>
+            </div>
+            <ng-container *ngIf="item.faces && item.faces.length> 0">
+              <button mat-button [class.active]="showAccurancyDetail" class="btn-accurancy-detail"
+                (click)="toggleAccurancyDetail()" matTooltip="Accurancy">
+                <mat-icon svgIcon="icon-target"></mat-icon>
+                Accurancy
+              </button>
+            </ng-container>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </ng-container>
+  </div>
+</div>

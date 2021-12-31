@@ -50,6 +50,7 @@ export class ResetPasswordComponent implements OnInit {
   uid: any;
   client: any;
   accessToken: any;
+  isSpinnerVisible:boolean = false;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -91,9 +92,11 @@ export class ResetPasswordComponent implements OnInit {
   reset() {
     const getFormValue = this.resetForm.value;
     if (this.resetForm.valid) {
+      this.isSpinnerVisible = true;
       this.authService.resetPassword(getFormValue.password, getFormValue.confirmPassword, getFormValue.oldPassword,
         this.uid, this.client, this.accessToken).subscribe(
           response => {
+            this.isSpinnerVisible = false;
             this.snackBar.open("Password changed successfully.", "", {
               duration: 2000,
               verticalPosition: "bottom",
@@ -105,6 +108,7 @@ export class ResetPasswordComponent implements OnInit {
             }, 2000);
           },
           err => {
+            this.isSpinnerVisible = false;
             const error = err.error;
             this.alertService.showMessage(
               "Error",

@@ -10,8 +10,14 @@ import { PersonRoutingModule } from "./person-routing.module";
 import { PersonComponent } from "./person.component";
 import { PersonService } from "../../services/person.service";
 import { AddPersonModule } from "./add-person/add-person.module";
+import { ViewPersonModule } from "./view-person/view-person.module";
 import { CatalogService } from "app/services/catalog.service";
 import { FileUploadModule } from "app/shared/file-upload/file-upload.module";
+import {
+  DropzoneModule,
+  DropzoneConfigInterface,
+  DROPZONE_CONFIG,
+} from "ngx-dropzone-wrapper";
 @NgModule({
   imports: [
     CommonModule,
@@ -19,13 +25,15 @@ import { FileUploadModule } from "app/shared/file-upload/file-upload.module";
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    DropzoneModule,
     FileUploadModule,
     ListModule,
     AddPersonModule,
+    ViewPersonModule,
     // Core
-    AspectRatioModule
+    AspectRatioModule,
   ],
   declarations: [PersonComponent],
-  providers: [PersonService, DataService, AlertService, CatalogService]
+  providers: [PersonService, DataService, AlertService, CatalogService],
 })
 export class PersonModule {}

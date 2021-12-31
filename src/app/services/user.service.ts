@@ -9,5 +9,45 @@ import { map } from "rxjs/operators";
 @Injectable()
 export class UserService {
   constructor(private http: HttpClient) {}
+  getAll() {
+    return this.http.get<any>(environment.apiUrl + "/users/").pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
 
+  getById(id: number) {
+    return this.http.get<any>(environment.apiUrl + "/users/" + id).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  create(data) {
+    return this.http.post<any>(environment.apiUrl + "/users/", data).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  update(data) {
+    return this.http
+      .put<any>(environment.apiUrl + "/users/" + data.id, data)
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  delete(id: number) {
+    return this.http.delete(environment.apiUrl + "/users/" + id).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
 }

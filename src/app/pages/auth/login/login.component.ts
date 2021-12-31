@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   inputType = "password";
   visible = false;
-
+  isSpinnerVisible:boolean = false;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -48,11 +48,15 @@ export class LoginComponent implements OnInit {
   signin() {
     const getFormValue = this.loginForm.value;
     if (this.loginForm.valid) {
+      this.isSpinnerVisible = true;
       this.authService.login(getFormValue.email, getFormValue.password).subscribe(
         response => {
-          this.router.navigate(["/dashboard"]);
+          localStorage.setItem("companyName", response.body.data.company_name);
+          this.router.navigate(["/search"]);
+          this.isSpinnerVisible = false;
         },
         err => {
+          this.isSpinnerVisible = false;
           const error = err.error;
           this.alertService.showMessage(
             "Error",

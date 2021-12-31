@@ -41,7 +41,7 @@
   transition: color .1s cubic-bezier(.35, 0, .25, 1);
 
   &.has-seprator{
-    border-bottom: 1px solid rgb(114, 114, 114);
+    border-bottom: 1px solid #2f2f3b;
   }
 
   .icon {
@@ -111,9 +111,9 @@
   }
 
   .sub-icon {
-    width: 22px;
+    width: 18px;
     position: absolute;
-    left: 22px;
+    left: 18px;
     top: 50%;
     color: rgba(255, 255, 255, .5);
     transform: translateY(-50%);

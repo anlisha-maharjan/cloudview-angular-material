@@ -1,0 +1,166 @@
+@import "var";
+cloudview-log {
+  .log-list {
+    padding: 0;
+  }
+
+  .log-list-body {
+    padding: 1rem 2rem 0;
+  }
+
+  .paginator {
+    display: block;
+    padding: 1rem 0 0;
+
+    .mat-paginator-container {
+      min-height: initial;
+      justify-content: space-between;
+
+      .mat-paginator-page-size {
+        width: auto;
+        color: $secondary-color;
+
+        .mat-paginator-page-size-select {
+          .mat-form-field-flex {
+            width: 7rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.1rem 1rem;
+            border: 1px solid;
+            border-radius: 3px;
+            background-color: transparent;
+
+            .mat-form-field-infix {
+              width: auto;
+              padding: 0;
+              border: none;
+            }
+          }
+
+          .mat-form-field-underline {
+            display: none;
+          }
+
+          .mat-select-arrow-wrapper {
+            transform: translateY(-10%);
+          }
+        }
+      }
+
+      .mat-paginator-range-actions {
+        .mat-paginator-range-label {
+          color: $secondary-color;
+        }
+      }
+    }
+  }
+
+  .list-header {
+    height: auto;
+    margin: 0 0 2rem;
+    padding: 1rem 2rem;
+    border: none;
+    background: transparent;
+
+    @include media-xs {
+      height: auto;
+      padding-top: $spacing;
+      padding-bottom: $spacing;
+    }
+
+    .list-name {
+      color: $color-3;
+      font-size: 18px;
+      line-height: 32px;
+      font-weight: 500;
+      padding-right: $spacing;
+
+      @include media-xs {
+        border-right: none;
+      }
+    }
+
+    .table-filter-wrapper {
+      position: relative;
+      margin-left: auto;
+    }
+
+    .actions {
+      button.mat-stroked-button {
+        min-width: 60px;
+        margin: 0 0.5rem;
+        padding: 0.2rem 1rem;
+        border-color: $color-3;
+        border-radius: 30px;
+        background-color: transparent;
+        color: $color-3;
+
+        mat-icon {
+          width: 1.8rem;
+          height: 1.8rem;
+          font-size: 1.8rem;
+          line-height: 1;
+        }
+
+        &.delete {
+          border-color: $color-3;
+          background-color: $color-3;
+          color: #ffffff;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .right-filter {
+    margin-bottom: 1.6rem;
+    margin-left: auto;
+    mat-form-field.mat-form-field {
+      .mat-form-field-wrapper {
+        padding-bottom: 0.8rem;
+      }
+
+      .mat-form-field-infix {
+        padding: 1em 0 0.8em 0;
+        border: none;
+
+        .mat-select-arrow-wrapper {
+          transform: translate(0);
+        }
+      }
+      &.mat-form-field-should-float {
+        &.mat-form-field-appearance-outline {
+          .mat-form-field-infix {
+            .mat-form-field-label-wrapper {
+              .mat-form-field-label {
+                transform: translateY(-0.95em) scale(0.75);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .log-list {
+    padding: 0 3rem;
+    list-style: none;
+    li {
+      padding: 1rem 0;
+      font-size: 1.6rem;
+      border-bottom: 1px solid #eeeeee;
+
+      &:before {
+        content: "*";
+        margin-right: 1rem;
+        font-size: 2rem;
+        color: $primary-color;
+      }
+    }
+  }
+}

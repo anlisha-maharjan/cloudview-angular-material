@@ -17,6 +17,7 @@ import { Helpers } from "app/helpers/helpers";
 })
 export class ForgotPasswordComponent implements OnInit {
   forgotForm: FormGroup;
+  isSpinnerVisible:boolean = false;
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
@@ -35,6 +36,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   forgotPassword(formDirective: FormGroupDirective) {
     if (this.forgotForm.valid) {
+      this.isSpinnerVisible = true;
       const getFormValue = this.forgotForm.value;
       this.authService.forgotPassword(getFormValue.email).subscribe(
         response => {
@@ -42,8 +44,10 @@ export class ForgotPasswordComponent implements OnInit {
             "dialog", "");
           formDirective.resetForm();
           this.forgotForm.reset();
+          this.isSpinnerVisible = false;
         },
         err => {
+          this.isSpinnerVisible = false;
           const error = err.error;
           this.alertService.showMessage(
             "Error",

@@ -52,12 +52,12 @@ $config: mat-typography-config(
   $title: mat-typography-level(20px, 32px, 500),
   $subheading-2: mat-typography-level(18px, 28px, 400),
   $subheading-1: mat-typography-level(16px, 24px, 400),
-  $body-2: mat-typography-level(14px, 24px, 500),
-  $body-1: mat-typography-level(14px, 22px, 400),
+  $body-2: mat-typography-level(13.33px, 24px, 500),
+  $body-1: mat-typography-level(13.33px, 22px, 400),
   $caption: mat-typography-level(13px, 22px, 400),
-  $button: mat-typography-level(14px, 14px, 500),
+  $button: mat-typography-level(13.33px, 14px, 500),
     // Line-height must be unit-less fraction of the font-size.
-  $input: mat-typography-level(16px, 1.125, 400)
+  $input: mat-typography-level(13.33px, 1.125, 400)
 );
 
 /**
@@ -79,7 +79,7 @@ $theme-secondary-text: mat-color($theme-foreground-map, secondary-text);
 $theme-divider: mat-color($theme-foreground-map, divider);
 $theme-icon: mat-color($theme-foreground-map, icon);
 
-$theme-background: #F4F7F9;
+$theme-background: #F5F7FA;
 //$theme-background: mat-color($theme-background-map, background);
 $theme-background-light: mat-color($theme-background-map, background);
 $theme-app-bar: mat-color($theme-background-map, app-bar);
@@ -144,10 +144,10 @@ $card-elevation: $elevation;
   Toolbar
  */
 $toolbar-background: white;
-$toolbar-height: 64px;
+$toolbar-height:50px;
 $toolbar-z-index: 500;
 
-$toolbar-button-width: 64px;
+$toolbar-button-width: 50px;
 $toolbar-button-icon-color: $theme-icon;
 $toolbar-elevation: $elevation;
 
@@ -203,10 +203,10 @@ $sidenav-background-level6-active: $sidenav-background-level6-hover;
 
 $sidenav-item-color: rgba(255, 255, 255, 0.8);
 $sidenav-item-color-hover: white;
-$sidenav-item-font-size: 14px;
-$sidenav-item-icon-font-size: 22px;
+$sidenav-item-font-size: 13.333px;
+$sidenav-item-icon-font-size: 18px;
 
-$sidenav-item-height: 48px;
+$sidenav-item-height: 45px;
 $sidenav-item-padding-left: 24px;
 $sidenav-item-padding-right: 24px;
 $sidenav-item-padding-left-level2: $sidenav-item-padding-left + $sidenav-item-icon-font-size;

@@ -5,7 +5,8 @@ import {
   AfterViewInit,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  ViewChild,
 } from "@angular/core";
 import { AlertService } from "app/services/alert.service";
 import { MatSnackBar, MatDialog } from "@angular/material";
@@ -13,27 +14,42 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  FormGroupDirective
+  FormControl,
+  FormGroupDirective,
 } from "@angular/forms";
 import { Helpers } from "app/helpers/helpers";
 import { Person } from "app/models/person.model";
 import { PersonService } from "app/services/person.service";
 import { CatalogService } from "app/services/catalog.service";
-
+import { ReplaySubject } from "rxjs/ReplaySubject";
+import { Subject } from "rxjs/Subject";
+import { take, takeUntil } from "rxjs/operators";
+import { MatSelect } from "@angular/material";
+interface Catalog {
+  id: string;
+  name: string;
+}
 @Component({
   selector: "cloudview-add-person",
   templateUrl: "./add-person.component.html",
   styleUrls: ["./add-person.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class AddPersonComponent implements OnInit, AfterViewInit {
   @Input() id: number;
   @Output("refresh") refresh: EventEmitter<any> = new EventEmitter();
   person: Person;
-  personImages: any;
   personForm: FormGroup;
-  heading: any = "Add Person";
-  catalogList: any;
+  heading: any = "Add Face";
+  private catalogList: Catalog[];
+  public catalogCtrl: FormControl = new FormControl();
+  public catalogFilterCtrl: FormControl = new FormControl();
+  public filteredCatalogs: ReplaySubject<Catalog[]> = new ReplaySubject<
+    Catalog[]
+  >(1);
+  /** Subject that emits when the component has been destroyed. */
+  private _onDestroy = new Subject<void>();
+  @ViewChild("singleSelect") singleSelect: MatSelect;
   constructor(
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
@@ -45,23 +61,63 @@ export class AddPersonComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.buildPersonForm();
-    this.catalogService.getAll().subscribe(response => {
+    this.catalogService.getAll().subscribe((response) => {
       this.catalogList = response.data;
+      this.filteredCatalogs.next(this.catalogList.slice());
     });
+    this.catalogFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterCatalogs();
+      });
+  }
+
+  ngOnDestroy() {
+    this._onDestroy.next();
+    this._onDestroy.complete();
   }
 
   ngAfterViewInit() {
     // edit mode
     if (this.id != undefined) {
-      this.personService.getById(this.id).subscribe(response => {
-        this.person = response.data;
-        this.buildPersonForm(this.person);
-        this.heading = "Edit Person";
-      });
-      this.personService.getImages(this.id).subscribe(response => {
-        this.personImages = response.data.images;
-      });
+      this.personService.getById(this.id).subscribe(
+        (response) => {
+          this.person = response.data;
+          this.buildPersonForm(this.person);
+          // this.setInitialValue();
+          this.heading = "Edit Face";
+        },
+        (err) => {
+          const error = err.error;
+          this.alertService.showMessage(
+            "Error",
+            Helpers.parseMessage(error.error ? error.error : error.message),
+            "dialog",
+            ""
+          );
+        }
+      );
     }
+  }
+
+  private filterCatalogs() {
+    if (!this.catalogList) {
+      return;
+    }
+    // get the search keyword
+    let search = this.catalogFilterCtrl.value;
+    if (!search) {
+      this.filteredCatalogs.next(this.catalogList.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the catalog
+    this.filteredCatalogs.next(
+      this.catalogList.filter(
+        (item) => item.name.toLowerCase().indexOf(search) > -1
+      )
+    );
   }
 
   buildPersonForm(val: any = {}) {
@@ -69,10 +125,10 @@ export class AddPersonComponent implements OnInit, AfterViewInit {
       id: [val.id],
       firstname: [val.firstname, [Validators.required]],
       middlename: [val.middlename],
-      lastname: [val.lastname, [Validators.required]],
-      gender: [val.gender, [Validators.required]],
+      lastname: [val.lastname],
+      gender: [val.gender],
       catalog_id: [val.catalog_id],
-      description: [val.description]
+      description: [val.description],
     });
   }
 
@@ -101,29 +157,27 @@ export class AddPersonComponent implements OnInit, AfterViewInit {
   }
 
   send(formDirective: FormGroupDirective) {
-    this.personForm
-      .get("description")
-      .patchValue(`${this.personForm.get("description").value}`);
+    // this.personForm.get("description").patchValue(`${this.personForm.get("description").value}`);
     const getFormValue = this.personForm.value;
     if (this.personForm.valid) {
       if (!getFormValue.id) {
         this.personService.create(getFormValue).subscribe(
-          response => {
+          (response) => {
             this.dialog.closeAll();
             this.refresh.emit(true);
             this.snackBar.open("Person Saved Successfully.", "", {
               duration: 2000,
               verticalPosition: "bottom",
-              horizontalPosition: "center"
+              horizontalPosition: "center",
             });
             formDirective.resetForm();
             this.personForm.reset();
           },
-          err => {
+          (err) => {
             const error = err.error;
             this.alertService.showMessage(
               "Error",
-              Helpers.parseMessage(error.errors ? error.errors : error.message),
+              Helpers.parseMessage(error.error ? error.error : error.message),
               "dialog",
               ""
             );
@@ -131,20 +185,20 @@ export class AddPersonComponent implements OnInit, AfterViewInit {
         );
       } else {
         this.personService.update(getFormValue).subscribe(
-          response => {
+          (response) => {
             this.dialog.closeAll();
             this.refresh.emit(true);
             this.snackBar.open("Person Updated Successfully.", "", {
               duration: 2000,
               verticalPosition: "bottom",
-              horizontalPosition: "center"
+              horizontalPosition: "center",
             });
           },
-          err => {
+          (err) => {
             const error = err.error;
             this.alertService.showMessage(
               "Error",
-              Helpers.parseMessage(error.errors ? error.errors : error.message),
+              Helpers.parseMessage(error.error ? error.error : error.message),
               "dialog",
               ""
             );

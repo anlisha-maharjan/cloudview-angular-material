@@ -7,7 +7,8 @@
     "experimentalDecorators": true,
     "lib": [
       "es2016",
-      "dom"
+      "dom",
+      "es2017.object"
     ],
     "outDir": "../out-tsc/app",
     "target": "es5",

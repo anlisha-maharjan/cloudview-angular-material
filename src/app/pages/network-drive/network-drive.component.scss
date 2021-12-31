@@ -1,0 +1,308 @@
+@import "var";
+cloudview-network-drive {
+  .network-list {
+    padding: 0;
+  }
+
+  .paginator {
+    display: block;
+    padding: 1rem 0 0;
+
+    .mat-paginator-container {
+      min-height: initial;
+      justify-content: space-between;
+
+      .mat-paginator-page-size {
+        width: auto;
+        color: $secondary-color;
+
+        .mat-paginator-page-size-select {
+          .mat-form-field-flex {
+            width: 7rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.1rem 1rem;
+            border: 1px solid;
+            border-radius: 3px;
+            background-color: transparent;
+
+            .mat-form-field-infix {
+              width: auto;
+              padding: 0;
+              border: none;
+            }
+          }
+
+          .mat-form-field-underline {
+            display: none;
+          }
+
+          .mat-select-arrow-wrapper {
+            transform: translateY(-10%);
+          }
+        }
+      }
+
+      .mat-paginator-range-actions {
+        .mat-paginator-range-label {
+          color: $secondary-color;
+        }
+      }
+    }
+  }
+
+  .list-header {
+    height: auto;
+    margin: 0 0 2rem;
+    padding: 1rem 2rem;
+    border: none;
+    background: transparent;
+
+    @include media-xs {
+      height: auto;
+      padding-top: $spacing;
+      padding-bottom: $spacing;
+    }
+
+    .list-name {
+      color: $color-3;
+      font-size: 18px;
+      line-height: 32px;
+      font-weight: 500;
+      padding-right: $spacing;
+
+      @include media-xs {
+        border-right: none;
+      }
+    }
+
+    .filter-input {
+      font-size: 16px;
+      line-height: 1.125;
+      border: none;
+      height: 32px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .filter-input-icon {
+      width: 1.2em;
+      color: $theme-icon;
+      vertical-align: bottom;
+      height: 22px;
+      font-size: 22px;
+      margin-right: $padding-xs;
+    }
+
+    .actions {
+      button.mat-stroked-button {
+        min-width: 60px;
+        margin: 0 0.5rem;
+        padding: 0.2rem 1rem;
+        border-color: $color-3;
+        border-radius: 30px;
+        background-color: transparent;
+        color: $color-3;
+
+        mat-icon {
+          width: 1.8rem;
+          height: 1.8rem;
+          font-size: 1.8rem;
+          line-height: 1;
+        }
+
+        &.create {
+          border-color: $color-3;
+          background-color: $color-3;
+          color: #ffffff;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .table-filter-wrapper {
+    position: relative;
+    margin-left: auto;
+
+    .cloudview-filter-input-icon {
+      position: absolute;
+      top: 1rem;
+      left: 1.2rem;
+    }
+
+    .cloudview-filter-input {
+      width: 100%;
+      height: 38px;
+      padding: 0.5rem 1.5rem 0.5rem 4.5rem;
+      border: 1px solid #b4b4b4;
+      border-radius: 30px;
+      background-color: transparent;
+      transition: 300ms ease;
+
+      &:focus {
+        background-color: #ffffff;
+        box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.3);
+        outline: none;
+      }
+    }
+  }
+
+  .network-drive-structure {
+    margin: 4rem 0;
+    background-color: #ffffff;
+
+    @media (min-width: 961px) {
+      margin: 6rem 4rem;
+    }
+
+    .mat-drawer-content {
+      padding: 0 1.5rem;
+
+      @media (min-width: 961px) {
+        width: calc(100% - 320px);
+        padding: 0 4rem;
+      }
+    }
+
+    &__list {
+      width: 320px;
+      padding: 2rem;
+      border: 1px solid #eeeeee;
+
+      mat-expansion-panel.mat-expansion-panel {
+        margin: 0 0 1.8rem;
+        box-shadow: none;
+
+        .mat-expansion-panel-header {
+          height: auto !important;
+          padding: 1rem 1.8rem;
+          border: 1px solid #777777;
+          border-radius: 4px;
+          &.mat-expanded {
+            background-color: $primary-color;
+            color: #ffffff;
+            border-color: $primary-color;
+
+            mat-panel-title {
+              color: inherit;
+            }
+
+            button {
+              mat-icon {
+                color: #ffffff;
+              }
+            }
+          }
+        }
+
+        .mat-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .mat-expansion-panel-header-description {
+            margin: 0;
+            flex-grow: 0;
+          }
+        }
+      }
+
+      .mat-expansion-panel-body {
+        padding: 0 24px 0;
+      }
+
+      mat-list.mat-list {
+        padding: 0;
+        border-left: 1px dashed #b4b4b4;
+
+        mat-list-item.mat-list-item {
+          position: relative;
+
+          &:before {
+            width: 10px;
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            border-top: 1px dashed #b4b4b4;
+            transform: translateY(-50%);
+          }
+
+          &.active {
+            color: $secondary-color;
+            font-weight: 500;
+
+            &:after {
+              width: 8px;
+              height: 8px;
+              content: "";
+              position: absolute;
+              top: 50%;
+              right: 0;
+              border-radius: 50%;
+              background-color: $secondary-color;
+              transform: translateY(-50%);
+            }
+          }
+        }
+      }
+    }
+
+    &__detail {
+      min-height: 70rem;
+
+      .structure-info {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 0 4rem;
+        padding: 1rem;
+        border-radius: 4px;
+        box-shadow: 0 0px 6px -2px rgba(0, 0, 0, 0.3);
+        background-color: #f2f2f2;
+
+        h6 {
+          margin: 1.2rem 2rem 1.8rem;
+          font-size: 1.6rem;
+          font-weight: 500;
+
+          span {
+            font-weight: 400;
+          }
+        }
+      }
+    }
+  }
+
+  .video-list {
+    margin: 0 0 2rem;
+    padding: 1.6rem 2rem;
+    border: 1px solid #b4b4b4;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px -4px rgba(0, 0, 0, 0.3);
+
+    h5 {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    mat-icon {
+      width: 3rem;
+      margin-right: 1.6rem;
+      font-size: 3rem;
+    }
+
+    .cols {
+      margin: 0;
+    }
+  }
+}

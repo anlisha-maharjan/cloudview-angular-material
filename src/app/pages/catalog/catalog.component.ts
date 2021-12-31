@@ -6,13 +6,13 @@ import {
   ViewEncapsulation,
   Input,
   AfterViewInit,
-  TemplateRef
+  TemplateRef,
 } from "@angular/core";
 import {
   MatPaginator,
   MatSort,
   MatDialog,
-  MatSnackBar
+  MatSnackBar,
 } from "@angular/material";
 import { Router } from "@angular/router";
 import { AlertService } from "app/services/alert.service";
@@ -28,17 +28,18 @@ import { CatalogService } from "app/services/catalog.service";
   selector: "cloudview-catalog",
   templateUrl: "./catalog.component.html",
   styleUrls: ["./catalog.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class CatalogComponent implements OnInit, AfterViewInit {
   datatable: any;
   deleteId: number;
   editId: number;
+  viewId: number;
   catalog: Catalog[];
   tableActions: boolean;
   columns: ListColumn[] = [];
   pageLength = 0;
-  pageSize = 10;
+  pageSize = 20;
   dataSource: TableDataSource;
   filter: string;
 
@@ -78,14 +79,20 @@ export class CatalogComponent implements OnInit, AfterViewInit {
       "catalogs",
       this.filter,
       this.paginator.pageIndex,
-      function(response) {
-        _self.pageLength = response.length;
+      function (response) {
+        _self.pageLength = response.meta.total_count;
         const data: Array<Catalog> = [];
-        response.data.map(row => {
+        response.data.map((row) => {
           const catalog: any = {
             id: row.id,
             name: row.name,
-            description: (row.description.length > 100) ? row.description.replace(/(<([^>]+)>)/ig,"").substring(0, 100) + '...' : row.description.replace(/(<([^>]+)>)/ig,"")
+            description: row.description
+              ? row.description.length > 75
+                ? row.description
+                    .replace(/(<([^>]+)>)/gi, "")
+                    .substring(0, 75) + "..."
+                : row.description.replace(/(<([^>]+)>)/gi, "")
+              : "",
           };
           data.push(catalog);
         });
@@ -101,19 +108,19 @@ export class CatalogComponent implements OnInit, AfterViewInit {
         name: "NAME",
         property: "name",
         visible: true,
-        isModelProperty: true
+        isModelProperty: true,
       },
       {
         name: "DESCRIPTION",
         property: "description",
         visible: true,
-        isModelProperty: true
+        isModelProperty: true,
       },
       {
         name: "ACTION",
         property: "actions",
-        visible: this.tableActions
-      }
+        visible: this.tableActions,
+      },
     ] as ListColumn[];
   }
 
@@ -126,21 +133,21 @@ export class CatalogComponent implements OnInit, AfterViewInit {
 
   get visibleColumns() {
     return this.columns
-      .filter(column => column.visible)
-      .map(column => column.property);
+      .filter((column) => column.visible)
+      .map((column) => column.property);
   }
 
   openDeleteModal(templateRef: TemplateRef<any>, row) {
     this.deleteId = row.id;
     const dialogRef = this.dialog.open(templateRef, {
-      panelClass: "default-alert-pop"
+      panelClass: "default-alert-pop",
     });
   }
 
   openAddModal(templateRef: TemplateRef<any>) {
     const dialogRef = this.dialog.open(templateRef, {
       width: "60rem",
-      panelClass: "default-add-pop"
+      panelClass: "default-add-pop",
     });
   }
 
@@ -148,25 +155,33 @@ export class CatalogComponent implements OnInit, AfterViewInit {
     this.editId = row.id;
     const dialogRef = this.dialog.open(templateRef, {
       width: "60rem",
-      panelClass: "default-add-pop"
+      panelClass: "default-add-pop",
+    });
+  }
+
+  openViewModal(templateRef: TemplateRef<any>, row) {
+    this.viewId = row.id;
+    const dialogRef = this.dialog.open(templateRef, {
+      width: "50rem",
+      panelClass: "default-add-pop",
     });
   }
 
   deleteRow() {
     this.catalogService.delete(this.deleteId).subscribe(
-      data => {
+      (data) => {
         this.snackBar.open("Catalog Deleted Successfully.", "", {
           duration: 2000,
           verticalPosition: "bottom",
-          horizontalPosition: "center"
+          horizontalPosition: "center",
         });
         this.loadModel();
       },
-      err => {
+      (err) => {
         const error = err.error;
         this.alertService.showMessage(
           "Error",
-          Helpers.parseMessage(error.errors ? error.errors : error.message),
+          Helpers.parseMessage(error.error ? error.error : error.message),
           "dialog",
           ""
         );

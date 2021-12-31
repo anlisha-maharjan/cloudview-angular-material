@@ -6,13 +6,15 @@ import { MaterialModule } from '../../../shared/material-components.module';
 import { ResetPasswordComponent } from './reset-password.component';
 import { ResetPasswordRoutingModule } from './reset-password-routing.module';
 import { AuthenticationService } from 'app/services/authentication.service';
+import { MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     ResetPasswordRoutingModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   providers: [AuthenticationService, AlertService],
   declarations: [ResetPasswordComponent]

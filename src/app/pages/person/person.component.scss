@@ -1,0 +1,12 @@
+@import "var";
+cloudview-person {
+  .cloudview-list-table .mat-cell.actions-cell,
+  .cloudview-list-table .mat-header-cell.actions-cell {
+    &:first-child {
+      min-width: 50px;
+    }
+  }
+  .view {
+    cursor: pointer;
+  }
+}

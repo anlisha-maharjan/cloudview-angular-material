@@ -4,7 +4,9 @@ import {
   ViewEncapsulation,
   AfterViewInit,
   ViewChild,
-  Input, Output, EventEmitter
+  Input,
+  Output,
+  EventEmitter,
 } from "@angular/core";
 import { AlertService } from "app/services/alert.service";
 import { MatSnackBar, MatDialog } from "@angular/material";
@@ -12,7 +14,7 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  FormGroupDirective
+  FormGroupDirective,
 } from "@angular/forms";
 import { Helpers } from "app/helpers/helpers";
 import { NetworkDrive } from "app/models/network-drive.model";
@@ -21,7 +23,7 @@ import { NetworkDriveService } from "app/services/network-drive.service";
   selector: "cloudview-add-network-drive",
   templateUrl: "./add-network-drive.component.html",
   styleUrls: ["./add-network-drive.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class AddNetworkDriveComponent implements OnInit, AfterViewInit {
   @Input() id: number;
@@ -45,11 +47,22 @@ export class AddNetworkDriveComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // edit mode
     if (this.id != undefined) {
-      this.networkDriveService.getById(this.id).subscribe(response => {
-        this.networkDrive = response.data;
-        this.buildNetworkDriveForm(this.networkDrive);
-        this.heading = "Edit Network Drive";
-      });
+      this.networkDriveService.getById(this.id).subscribe(
+        (response) => {
+          this.networkDrive = response.data;
+          this.buildNetworkDriveForm(this.networkDrive);
+          this.heading = "Edit Network Drive";
+        },
+        (err) => {
+          const error = err.error;
+          this.alertService.showMessage(
+            "Error",
+            Helpers.parseMessage(error.error ? error.error : error.message),
+            "dialog",
+            ""
+          );
+        }
+      );
     }
   }
 
@@ -57,7 +70,16 @@ export class AddNetworkDriveComponent implements OnInit, AfterViewInit {
     this.networkDriveForm = this.fb.group({
       id: [val.id],
       name: [val.name, [Validators.required]],
-      path: [val.path, [Validators.required]]
+      path: [
+        val.path,
+        [
+          Validators.required,
+          // Validators.pattern(/^(\\)(\\[A-Za-z_\-\s0-9\.]+)+$/),
+          Validators.pattern(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\/.*$/),
+        ],
+      ],
+      username: [val.username, [Validators.required]],
+      password: [val.password, [Validators.required]],
     });
   }
 
@@ -69,27 +91,35 @@ export class AddNetworkDriveComponent implements OnInit, AfterViewInit {
     return this.networkDriveForm.get("path");
   }
 
+  get username() {
+    return this.networkDriveForm.get("username");
+  }
+
+  get password() {
+    return this.networkDriveForm.get("password");
+  }
+
   send(formDirective: FormGroupDirective) {
     const getFormValue = this.networkDriveForm.value;
     if (this.networkDriveForm.valid) {
       if (!getFormValue.id) {
         this.networkDriveService.create(getFormValue).subscribe(
-          response => {
+          (response) => {
             this.dialog.closeAll();
             this.refresh.emit(true);
             this.snackBar.open("Network Drive Saved Successfully.", "", {
               duration: 2000,
               verticalPosition: "bottom",
-              horizontalPosition: "center"
+              horizontalPosition: "center",
             });
             formDirective.resetForm();
             this.networkDriveForm.reset();
           },
-          err => {
+          (err) => {
             const error = err.error;
             this.alertService.showMessage(
               "Error",
-              Helpers.parseMessage(error.errors ? error.errors : error.message),
+              Helpers.parseMessage(error.error ? error.error : error.message),
               "dialog",
               ""
             );
@@ -97,20 +127,20 @@ export class AddNetworkDriveComponent implements OnInit, AfterViewInit {
         );
       } else {
         this.networkDriveService.update(getFormValue).subscribe(
-          response => {
+          (response) => {
             this.dialog.closeAll();
             this.refresh.emit(true);
             this.snackBar.open("Network Drive Updated Successfully.", "", {
               duration: 2000,
               verticalPosition: "bottom",
-              horizontalPosition: "center"
+              horizontalPosition: "center",
             });
           },
-          err => {
+          (err) => {
             const error = err.error;
             this.alertService.showMessage(
               "Error",
-              Helpers.parseMessage(error.errors ? error.errors : error.message),
+              Helpers.parseMessage(error.error ? error.error : error.message),
               "dialog",
               ""
             );
