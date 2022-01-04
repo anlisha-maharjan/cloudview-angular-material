@@ -1,27 +1,34 @@
-# Angular
+## About 
+This codebase was created to demonstrate a pilot application for facial detection built with Angular and Angular Material that interacts with an actual Ruby on Rails backend server including CRUD operations, authentication, routing, pagination, and more.
+## Requirements
+- Node.js
+- npm
+- Angular CLI
+## Getting started
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.7.
+```bash
+# Clone the repo
+git clone     
+cd cloudview-angular-material    
 
-## Development server
+# Install npm packages
+npm install  
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files  
+ng serve  
 
-## Code scaffolding
+```
+## Building the project
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
 
-## Build
+# Build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build
+ng build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```
+## Functionality overview
+- Authenticate users via angular-token (login/signup/forgot-password pages)
+- CRUD Users
+- CRUD Cameras (Add Camera IP)
+- CRUD Videos (File upload using ngx-dropzone-wrapper)
+- GET and display all snapshots of facial detections sent from backend server
